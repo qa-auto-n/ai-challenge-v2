@@ -1,14 +1,14 @@
 const CATEGORY_META = [
   {
-    key: "education", label: "Education", weight: 16, color: "#0ea5e9",
+    key: "education", label: "Education", weight: 64, color: "#0ea5e9",
     icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7.5 10 3l8 4.5-8 4.5-8-4.5Z"/><path d="M5 9.25v4.1c0 .6 2.24 2.15 5 2.15s5-1.55 5-2.15v-4.1"/><path d="M18 7.5v5"/></svg>`,
   },
   {
-    key: "publicSpeaking", label: "Public Speaking", weight: 8, color: "#0ea5e9",
+    key: "publicSpeaking", label: "Public Speaking", weight: 64, color: "#0ea5e9",
     icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="12" height="8" rx="1"/><path d="M10 11v5"/><path d="M6.5 18h7"/><path d="M5 6h10"/></svg>`,
   },
   {
-    key: "universityPartnership", label: "University Partnership", weight: 6, color: "#0ea5e9",
+    key: "universityPartnership", label: "University Partnership", weight: 32, color: "#0ea5e9",
     icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="M7.25 8.5h.01"/><path d="M12.75 8.5h.01"/><path d="M7.5 12.25c.8 1.1 1.73 1.65 2.5 1.65s1.7-.55 2.5-1.65"/></svg>`,
   },
 ];
