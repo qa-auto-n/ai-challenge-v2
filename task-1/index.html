@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leaderboard</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2316213d'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-size='34' fill='%23ffcc21'%3E%E2%98%85%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="leaderboard">
+        <header class="hero">
+          <h2>Leaderboard</h2>
+          <p>Top performers based on contributions and activity</p>
+        </header>
+
+        <section class="filter-panel" aria-label="Leaderboard filters">
+          <div class="filters">
+            <div class="dropdown-wrap" data-filter="year">
+              <button
+                id="yearFilter"
+                class="dropdown-trigger"
+                type="button"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+              >
+                <span class="dropdown-label">All Years</span>
+                <span class="dropdown-caret" aria-hidden="true"></span>
+              </button>
+              <div class="dropdown-menu" hidden></div>
+            </div>
+            <div class="dropdown-wrap" data-filter="quarter">
+              <button
+                id="quarterFilter"
+                class="dropdown-trigger"
+                type="button"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+              >
+                <span class="dropdown-label">All Quarters</span>
+                <span class="dropdown-caret" aria-hidden="true"></span>
+              </button>
+              <div class="dropdown-menu" hidden></div>
+            </div>
+            <div class="dropdown-wrap" data-filter="category">
+              <button
+                id="categoryFilter"
+                class="dropdown-trigger"
+                type="button"
+                aria-haspopup="listbox"
+                aria-expanded="false"
+              >
+                <span class="dropdown-label">All Categories</span>
+                <span class="dropdown-caret" aria-hidden="true"></span>
+              </button>
+              <div class="dropdown-menu" hidden></div>
+            </div>
+          </div>
+
+          <div class="search-wrap">
+            <label class="sr-only" for="searchInput">Search artists</label>
+            <span class="search-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="6" cy="6" r="4.25" stroke="rgb(41,41,43)" stroke-width="1.5"/>
+                <line x1="9.5" y1="9.5" x2="13.5" y2="13.5" stroke="rgb(41,41,43)" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <input
+              id="searchInput"
+              class="search-input"
+              type="text"
+              placeholder="Search artist..."
+              autocomplete="off"
+            />
+            <button id="searchClear" class="search-clear" type="button" aria-label="Clear search" hidden>
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+        </section>
+
+        <section class="podium" aria-label="Top three musicians">
+          <div id="podiumRoot" class="podium-grid"></div>
+        </section>
+
+        <section class="list" aria-label="Leaderboard rankings">
+          <div id="summary" class="summary"></div>
+          <div id="listRoot" class="list-root"></div>
+        </section>
+      </section>
+    </main>
+
+    <template id="podiumCardTemplate">
+      <article class="podium-card">
+        <div class="podium-user">
+          <div class="podium-avatar-wrap">
+            <div class="podium-avatar"></div>
+            <div class="podium-badge"></div>
+          </div>
+          <h3 class="podium-name"></h3>
+          <p class="podium-role"></p>
+          <div class="podium-score-pill">
+            <span class="score-star">★</span>
+            <span class="podium-score"></span>
+          </div>
+        </div>
+        <div class="podium-block">
+          <span class="podium-block-rank"></span>
+        </div>
+      </article>
+    </template>
+
+    <template id="rowTemplate">
+      <article class="row-card">
+        <div class="row-main">
+          <div class="row-left">
+            <span class="row-rank"></span>
+            <div class="row-avatar"></div>
+            <div class="row-info">
+              <h3 class="row-name"></h3>
+              <p class="row-role"></p>
+            </div>
+          </div>
+
+          <div class="row-right">
+            <div class="row-categories"></div>
+            <div class="row-divider" aria-hidden="true"></div>
+            <div class="row-total">
+              <span class="row-total-label">TOTAL</span>
+              <div class="row-total-score">
+                <span class="score-star">★</span>
+                <span class="row-score"></span>
+              </div>
+            </div>
+            <button class="row-toggle" type="button" aria-expanded="false" aria-label="Expand">
+              <span class="row-chevron" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M3 5.5L8 10.5L13 5.5" stroke="#0EA5E9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <div class="row-details" hidden>
+          <div class="activity-panel">
+            <h4 class="activity-title">RECENT ACTIVITY</h4>
+            <div class="activity-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Activity</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Points</th>
+                  </tr>
+                </thead>
+                <tbody class="activity-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
