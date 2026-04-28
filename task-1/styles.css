@@ -608,13 +608,15 @@ body {
 }
 
 .row-right {
-  gap: 24px;
+  gap: 16px;
   flex-shrink: 0;
+  min-width: 208.91px;
+  justify-content: flex-end;
 }
 
 .row-categories {
   display: flex;
-  gap: 24px;
+  gap: 16px;
   align-items: center;
 }
 
@@ -667,19 +669,24 @@ body {
 }
 
 .mini-stat-icon {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 20px;
   height: 20px;
   margin: 0 auto;
   color: #0EA5E9;
+  line-height: 20px;
+  font-size: 20px;
+  flex: 0 0 20px;
 }
 
 .mini-stat-icon svg {
   width: 20px;
   height: 20px;
   stroke: #0EA5E9;
+  display: block;
+  flex: 0 0 20px;
 }
 
 .mini-stat-value {
@@ -688,17 +695,18 @@ body {
   font-size: 12px;
   font-weight: 400;
   color: #475569;
+  line-height: 14px;
 }
 
 .row-divider {
   width: 1px;
-  height: 72px;
+  height: 43.5px;
   background: var(--line);
 }
 
 .row-total {
   text-align: right;
-  min-width: 150px;
+  min-width: 124px;
 }
 
 .row-total-label {
@@ -733,6 +741,7 @@ body {
   padding: 8px;
   flex-shrink: 0;
   transition: background 0.15s ease;
+  margin-left: 4px;
 }
 
 .row-toggle:hover {

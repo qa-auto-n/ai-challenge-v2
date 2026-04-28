@@ -1,61 +1,61 @@
 const CATEGORY_META = [
   {
-    key: "live", label: "Live Performances", weight: 24, color: "#2aa7f0",
-    icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="6" height="9" rx="3"/><path d="M4 10a6 6 0 0 0 12 0"/><line x1="10" y1="16" x2="10" y2="19"/><line x1="7" y1="19" x2="13" y2="19"/></svg>`,
+    key: "education", label: "Education", weight: 16, color: "#0ea5e9",
+    icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7.5 10 3l8 4.5-8 4.5-8-4.5Z"/><path d="M5 9.25v4.1c0 .6 2.24 2.15 5 2.15s5-1.55 5-2.15v-4.1"/><path d="M18 7.5v5"/></svg>`,
   },
   {
-    key: "studio", label: "Studio Sessions", weight: 16, color: "#4b8bd7",
-    icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v-2a6 6 0 0 1 12 0v2"/><rect x="2" y="11" width="3" height="5" rx="1"/><rect x="15" y="11" width="3" height="5" rx="1"/></svg>`,
+    key: "publicSpeaking", label: "Public Speaking", weight: 8, color: "#0ea5e9",
+    icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="12" height="8" rx="1"/><path d="M10 11v5"/><path d="M6.5 18h7"/><path d="M5 6h10"/></svg>`,
   },
   {
-    key: "collab", label: "Collaborations", weight: 6, color: "#7a73ef",
-    icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="3"/><path d="M1 18v-1a6 6 0 0 1 12 0v1"/><circle cx="15" cy="6" r="2.5"/><path d="M18 18v-1a4 4 0 0 0-3-3.87"/></svg>`,
+    key: "universityPartnership", label: "University Partnership", weight: 6, color: "#0ea5e9",
+    icon: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="M7.25 8.5h.01"/><path d="M12.75 8.5h.01"/><path d="M7.5 12.25c.8 1.1 1.73 1.65 2.5 1.65s1.7-.55 2.5-1.65"/></svg>`,
   },
 ];
 
-const YEARS = ["All Years", "2026", "2025", "2024", "2023"];
+const YEARS = ["All Years", "2025"];
 const QUARTERS = ["All Quarters", "Q1", "Q2", "Q3", "Q4"];
 const CATEGORY_OPTIONS = ["All Categories", ...CATEGORY_META.map((item) => item.label)];
 
 const firstNames = [
-  "Milo", "Nova", "Juno", "Ari", "Lena", "Theo", "Romy", "Sage", "Ezra", "Ivy",
-  "Zane", "Nina", "Orion", "Lyra", "Felix", "Mara", "Dorian", "Talia", "Reed", "Cleo",
-  "Atlas", "Vera", "Kian", "Suri", "Elio", "Mina", "Luca", "Skye", "Noel", "Ayla",
+  "Arin", "Selan", "Tavik", "Neris", "Elan", "Mira", "Soren", "Liora", "Cael", "Veya",
+  "Orin", "Talia", "Renza", "Kalen", "Ivara", "Darin", "Leona", "Sivan", "Narek", "Alira",
+  "Jorin", "Maelis", "Tovan", "Ceryn", "Eldin", "Riona", "Velin", "Soraya", "Kaelin", "Nivra",
 ];
 const lastNames = [
-  "Vesper", "Vale", "Mercer", "Lyric", "Sol", "Hart", "Monroe", "Sterling", "Lane", "Bloom",
-  "Quill", "Kestrel", "Arden", "Morrow", "West", "Fable", "Pryce", "Hollis", "Rowe", "Sloane",
-  "Ember", "Kade", "Haze", "Drake", "Bellamy", "Raine", "Ever", "Marin", "Winter", "Dune",
+  "Varen", "Kest", "Morrow", "Selk", "Danev", "Istral", "Corvin", "Talor", "Neris", "Belor",
+  "Sorell", "Kade", "Maren", "Velar", "Dorin", "Caldis", "Leth", "Varis", "Toren", "Mirel",
+  "Eldor", "Sarin", "Kael", "Voren", "Neth", "Relis", "Tarin", "Voss", "Meren", "Solis",
 ];
 const roles = [
-  "Lead Vocalist", "Producer", "Lead Guitarist", "Bass Artist", "Drummer", "Synth Composer",
-  "Sound Designer", "Session Pianist", "Creative Director", "Tour Artist", "DJ", "Songwriter",
+  "Learning Specialist", "Program Mentor", "Workshop Lead", "Education Coordinator", "Knowledge Lead", "Community Facilitator",
+  "Training Consultant", "Public Speaking Coach", "Partnership Specialist", "Curriculum Designer", "Program Manager", "Mentorship Lead",
 ];
-const collectives = [
-  "Neon Harbor", "Velvet Echo", "Moonline", "Glass Anthem", "Solar Arcade", "North Chorus",
-  "Static Bloom", "Low Tide Club", "Golden Signal", "Midnight Alley", "River Static", "Blue Current",
+const groups = [
+  "North Hub", "Blue Orbit", "Atlas Unit", "Signal Group", "Horizon Cell", "Delta Circle",
+  "Beacon Team", "River Point", "Nova Center", "Summit Desk", "Aurora Cluster", "Central Guild",
 ];
 const activityTemplates = {
-  live: [
-    'Headlined the "{collective} Afterglow" set',
-    'Performed a sunset showcase at Harbor Stage',
-    'Played an unplugged rooftop session',
-    'Opened the Midnight Circuit live program',
-    'Led the closing set for Neon Weekender',
+  education: [
+    '[LAB] Mentoring session coordinated by "{group}"',
+    '[LAB] Lecture series hosted by "{group}"',
+    '[LAB] Workshop on practical foundations',
+    '[LAB] Knowledge-sharing session for peer groups',
+    '[LAB] Study session supported by "{group}"',
   ],
-  studio: [
-    'Recorded a masterclass session on arrangement basics',
-    'Ran a guided rehearsal lab for rising artists',
-    'Produced a studio workshop on vocal layering',
-    'Hosted a writing room session for "{collective}"',
-    'Recorded a behind-the-scenes session breakdown',
+  publicSpeaking: [
+    'Conference talk delivered with "{group}"',
+    'Internal presentation hosted by "{group}"',
+    'Community webinar session for "{group}"',
+    'Public speaking workshop for guest attendees',
+    'Stage presentation during the quarterly meetup',
   ],
-  collab: [
-    'Joined a cross-collective collaboration showcase',
-    'Mentored an emerging artist duo',
-    'Co-created a live session with guest performers',
-    'Partnered on a spotlight residency project',
-    'Contributed to a collaborative community set',
+  universityPartnership: [
+    'University partnership session with "{group}"',
+    'Campus outreach activity organized by "{group}"',
+    'Student mentorship event hosted with partners',
+    'University collaboration workshop with invited guests',
+    'Partnership follow-up session for student groups',
   ],
 };
 const palettes = [
@@ -74,7 +74,7 @@ const state = {
   search: "",
 };
 
-const allMusicians = buildDataset(227);
+const allEntries = buildDataset(227);
 
 const yearFilter = document.querySelector("#yearFilter");
 const quarterFilter = document.querySelector("#quarterFilter");
@@ -124,8 +124,9 @@ syncSearchUi();
 render();
 
 function render() {
-  const ranked = allMusicians
-    .map((musician) => withComputedStats(musician))
+  const ranked = allEntries
+    .map((entry) => withComputedStats(entry))
+    .filter((entry) => entry.total > 0)
     .filter(matchesSearch)
     .sort(sortLeaderboard)
     .map((entry, index) => ({ ...entry, rank: index + 1 }));
@@ -160,17 +161,17 @@ function renderPodium(topThree) {
     .map((index) => topThree[index])
     .filter(Boolean);
 
-  for (const musician of visualOrder) {
+  for (const entry of visualOrder) {
     const template = document.querySelector("#podiumCardTemplate");
     const node = template.content.firstElementChild.cloneNode(true);
-    node.classList.add(`rank-${musician.rank}`);
+    node.classList.add(`rank-${entry.rank}`);
 
-    node.querySelector(".podium-avatar").style.backgroundImage = musician.avatar;
-    node.querySelector(".podium-badge").textContent = musician.rank;
-    node.querySelector(".podium-name").textContent = musician.name;
-    node.querySelector(".podium-role").textContent = `${musician.role} (${musician.collective})`;
-    node.querySelector(".podium-score").textContent = musician.total;
-    node.querySelector(".podium-block-rank").textContent = musician.rank;
+    node.querySelector(".podium-avatar").style.backgroundImage = entry.avatar;
+    node.querySelector(".podium-badge").textContent = entry.rank;
+    node.querySelector(".podium-name").textContent = entry.name;
+    node.querySelector(".podium-role").textContent = `${entry.role} (${entry.group})`;
+    node.querySelector(".podium-score").textContent = entry.total;
+    node.querySelector(".podium-block-rank").textContent = entry.rank;
 
     podiumRoot.appendChild(node);
   }
@@ -183,25 +184,25 @@ function renderList(ranked) {
     return;
   }
 
-  for (const musician of ranked) {
+  for (const entry of ranked) {
     const template = document.querySelector("#rowTemplate");
     const node = template.content.firstElementChild.cloneNode(true);
     const toggle = node.querySelector(".row-toggle");
     const details = node.querySelector(".row-details");
 
-    node.querySelector(".row-rank").textContent = musician.rank;
-    node.querySelector(".row-avatar").style.backgroundImage = musician.avatar;
-    node.querySelector(".row-name").textContent = musician.name;
-    node.querySelector(".row-role").textContent = `${musician.role} (${musician.collective})`;
-    node.querySelector(".row-score").textContent = musician.total;
+    node.querySelector(".row-rank").textContent = entry.rank;
+    node.querySelector(".row-avatar").style.backgroundImage = entry.avatar;
+    node.querySelector(".row-name").textContent = entry.name;
+    node.querySelector(".row-role").textContent = `${entry.role} (${entry.group})`;
+    node.querySelector(".row-score").textContent = entry.total;
 
     const categoryWrap = node.querySelector(".row-categories");
-    musician.visibleCategories.forEach((item) => {
+    entry.visibleCategories.forEach((item) => {
       categoryWrap.appendChild(createMiniStat(item));
     });
 
     const activityBody = node.querySelector(".activity-body");
-    musician.activities.slice(0, 7).forEach((item) => {
+    entry.activities.slice(0, 7).forEach((item) => {
       activityBody.appendChild(createActivityRow(item));
     });
 
@@ -298,14 +299,14 @@ function syncSearchUi() {
   searchClear.hidden = !hasValue;
 }
 
-function withComputedStats(musician) {
+function withComputedStats(entry) {
   const selectedCategory =
     state.category === "All Categories"
       ? null
       : CATEGORY_META.find((item) => item.label === state.category)?.key;
 
   const breakdown = CATEGORY_META.map((category) => {
-    const yearly = state.year === "All Years" ? Object.values(musician.stats) : [musician.stats[state.year]];
+    const yearly = state.year === "All Years" ? Object.values(entry.stats) : [entry.stats[state.year]];
     let events = 0;
 
     yearly.forEach((year) => {
@@ -332,21 +333,24 @@ function withComputedStats(musician) {
     : breakdown;
 
   const total = visibleBreakdown.reduce((sum, item) => sum + item.points, 0);
-  const visibleCategories = visibleBreakdown.filter((item) => item.events > 0);
+  const visibleCategories = visibleBreakdown
+    .filter((item) => item.events > 0)
+    .sort((a, b) => b.events - a.events || b.points - a.points)
+    .slice(0, selectedCategory ? 1 : 2);
 
   return {
-    ...musician,
+    ...entry,
     breakdown: visibleBreakdown,
-    visibleCategories: visibleCategories.length ? visibleCategories : visibleBreakdown.slice(0, 1),
+    visibleCategories,
     total,
-    activities: buildActivities(musician, breakdown),
+    activities: buildActivities(entry, selectedCategory),
   };
 }
 
 function matchesSearch(entry) {
   if (!state.search) return true;
 
-  const haystack = `${entry.name} ${entry.role} ${entry.collective}`.toLowerCase();
+  const haystack = `${entry.name} ${entry.role} ${entry.group}`.toLowerCase();
   return haystack.includes(state.search);
 }
 
@@ -355,42 +359,69 @@ function sortLeaderboard(a, b) {
 }
 
 function buildDataset(count) {
-  const musicians = [];
+  const entries = [];
 
   for (let index = 0; index < count; index += 1) {
     const first = firstNames[index % firstNames.length];
     const last = lastNames[(index * 7) % lastNames.length];
     const role = roles[(index * 5) % roles.length];
-    const collective = collectives[(index * 3) % collectives.length];
+    const group = groups[(index * 3) % groups.length];
     const palette = palettes[index % palettes.length];
-    musicians.push({
+    entries.push({
       id: index + 1,
       name: `${first} ${last}`,
       role,
-      collective,
+      group,
       avatar: avatarPortraitUrl(index, palette),
       stats: buildStats(index),
     });
   }
 
-  return musicians;
+  return entries;
 }
 
 function buildStats(seed) {
   const stats = {};
-  const years = ["2026", "2025", "2024", "2023"];
+  const years = ["2025"];
+  const profile = seed % 6;
 
   years.forEach((year, yearIndex) => {
     stats[year] = {};
     ["Q1", "Q2", "Q3", "Q4"].forEach((quarter, quarterIndex) => {
-      const live = weightedCount(seed, yearIndex, quarterIndex, 7, 5);
-      const studio = weightedCount(seed, yearIndex, quarterIndex, 11, 4);
-      const collab = weightedCount(seed, yearIndex, quarterIndex, 13, 2);
+      let education = weightedCount(seed, yearIndex, quarterIndex, 7, 5);
+      let publicSpeaking = weightedCount(seed, yearIndex, quarterIndex, 11, 4);
+      let universityPartnership = weightedCount(seed, yearIndex, quarterIndex, 13, 2);
+
+      if (profile === 0) {
+        education = Math.max(1, education + 1);
+        publicSpeaking = Math.max(0, publicSpeaking - 2);
+        universityPartnership = 0;
+      } else if (profile === 1) {
+        education = 0;
+        publicSpeaking = Math.max(1, publicSpeaking + 1);
+        universityPartnership = Math.max(0, universityPartnership - 1);
+      } else if (profile === 2) {
+        education = Math.max(0, education - 2);
+        publicSpeaking = Math.max(1, publicSpeaking);
+        universityPartnership = 0;
+      } else if (profile === 3) {
+        education = Math.max(1, education);
+        publicSpeaking = 0;
+        universityPartnership = Math.max(0, universityPartnership - 1);
+      } else if (profile === 4) {
+        education = 0;
+        publicSpeaking = Math.max(0, publicSpeaking - 2);
+        universityPartnership = Math.max(1, universityPartnership);
+      } else {
+        education = Math.max(1, education);
+        publicSpeaking = Math.max(0, publicSpeaking - 1);
+        universityPartnership = 0;
+      }
 
       stats[year][quarter] = {
-        live,
-        studio,
-        collab,
+        education,
+        publicSpeaking,
+        universityPartnership,
       };
     });
   });
@@ -398,22 +429,33 @@ function buildStats(seed) {
   return stats;
 }
 
-function buildActivities(musician, breakdown) {
+function buildActivities(entry, selectedCategory) {
   const rows = [];
+  const yearsToUse = state.year === "All Years" ? Object.entries(entry.stats) : [[state.year, entry.stats[state.year]]];
 
-  Object.entries(musician.stats).forEach(([year, quarters]) => {
+  yearsToUse.forEach(([year, quarters]) => {
+    if (!quarters) return;
+
     Object.entries(quarters).forEach(([quarter, values], quarterIndex) => {
+      if (state.quarter !== "All Quarters" && quarter !== state.quarter) {
+        return;
+      }
+
       CATEGORY_META.forEach((category, categoryIndex) => {
-        const events = values[category.key];
+        if (selectedCategory && category.key !== selectedCategory) {
+          return;
+        }
+
+          const events = values[category.key];
         for (let i = 0; i < events; i += 1) {
           const points = category.weight;
           const templateSet = activityTemplates[category.key];
-          const template = templateSet[(musician.id + i + quarterIndex + categoryIndex) % templateSet.length];
-          const day = String(28 - ((musician.id + i * 3 + quarterIndex) % 19)).padStart(2, "0");
+          const template = templateSet[(entry.id + i + quarterIndex + categoryIndex) % templateSet.length];
+          const day = String(28 - ((entry.id + i * 3 + quarterIndex) % 19)).padStart(2, "0");
           const monthIndex = quarterToMonth(quarter) - ((i + categoryIndex) % 3);
           const month = monthLabel(Math.max(1, monthIndex));
           rows.push({
-            title: template.replaceAll("{collective}", musician.collective),
+            title: template.replaceAll("{group}", entry.group),
             categoryLabel: category.label,
             dateLabel: `${day}-${month}-${year}`,
             points,
@@ -452,7 +494,7 @@ function avatarPortraitUrl(index, palette) {
   const skinTones = ["#f5d7be", "#f1c7a3", "#e9b98f", "#dca77e"];
   const hairTones = ["#22304d", "#4b3621", "#6b4f3a", "#1f2937", "#6b7280"];
   const shirtTones = ["#274c77", "#1f6f8b", "#3a506b", "#284b63", "#385170"];
-  const accentTones = ["#f9fafb", "#e2e8f0", "#dbeafe", "#ede9fe"];
+  const accentTones = ["#f8fafc", "#e2e8f0", "#dbeafe", "#ede9fe"];
   const skin = skinTones[index % skinTones.length];
   const hair = hairTones[(index * 3) % hairTones.length];
   const shirt = shirtTones[(index * 5) % shirtTones.length];
@@ -462,6 +504,8 @@ function avatarPortraitUrl(index, palette) {
   const faceY = 108 + (index % 6);
   const eyeY = faceY + 6;
   const mouthY = faceY + 28;
+  const tie = index % 2 === 0 ? "#cbd5e1" : "#f8fafc";
+  const jacket = shirtTones[(index * 11) % shirtTones.length];
 
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
@@ -476,16 +520,24 @@ function avatarPortraitUrl(index, palette) {
         </linearGradient>
       </defs>
       <rect width="320" height="320" rx="160" fill="url(#bg)" />
-      <rect width="320" height="320" rx="160" fill="rgba(255,255,255,0.08)" />
-      <ellipse cx="160" cy="82" rx="88" ry="36" fill="rgba(255,255,255,0.12)" />
-      <path d="M${shoulderInset} 276c16-54 52-86 98-86 46 0 82 32 98 86" fill="${shirt}" />
+      <rect width="320" height="320" rx="160" fill="rgba(255,255,255,0.06)" />
+      <ellipse cx="160" cy="72" rx="96" ry="42" fill="rgba(255,255,255,0.14)" />
+      <circle cx="235" cy="74" r="34" fill="rgba(255,255,255,0.12)" />
+      <path d="M${shoulderInset} 280c14-52 51-84 98-84 47 0 84 32 98 84" fill="${jacket}" />
+      <path d="M118 280c10-34 24-52 42-58h0c18 8 32 24 42 58" fill="${shirt}" opacity="0.9" />
+      <path d="M160 214l-14 66h28z" fill="${tie}" opacity="0.95" />
       <circle cx="160" cy="${faceY}" r="52" fill="${skin}" />
       <path d="M110 ${faceY - 4}c6-${hairHeight} 28-38 50-38 30 0 57 14 62 42-16-12-34-18-63-18-22 0-36 4-49 14Z" fill="${hair}" />
       <path d="M111 ${faceY - 10}c12 10 28 14 49 14 26 0 46-8 60-18-6 24-4 46 5 63-10 2-18-6-22-15-8 8-22 13-37 13-17 0-31-6-40-17-4 11-10 17-19 18 8-18 9-38 4-58Z" fill="${hair}" opacity="0.22" />
+      <path d="M138 ${faceY + 18}c7 6 37 6 44 0" stroke="#b16d66" stroke-width="2" opacity="0.2" fill="none" />
       <circle cx="142" cy="${eyeY}" r="4" fill="#374151" />
       <circle cx="178" cy="${eyeY}" r="4" fill="#374151" />
+      <path d="M134 ${eyeY - 10}c5-4 11-6 16-5" stroke="${hair}" stroke-width="3" stroke-linecap="round" opacity="0.7" fill="none" />
+      <path d="M170 ${eyeY - 10}c5-1 11 1 16 5" stroke="${hair}" stroke-width="3" stroke-linecap="round" opacity="0.7" fill="none" />
+      <path d="M159 ${eyeY + 6}c-2 7-2 13 2 18" stroke="#9a5b54" stroke-width="2" stroke-linecap="round" opacity="0.35" fill="none" />
       <path d="M145 ${mouthY}c8 8 22 8 30 0" stroke="#9a5b54" stroke-width="4" stroke-linecap="round" fill="none" />
-      <path d="M96 278h128" stroke="${accent}" stroke-width="6" stroke-linecap="round" opacity="0.8" />
+      <path d="M116 226c10 14 25 22 44 22 18 0 33-8 44-22" stroke="${accent}" stroke-width="5" stroke-linecap="round" opacity="0.8" fill="none" />
+      <path d="M108 278h104" stroke="${accent}" stroke-width="6" stroke-linecap="round" opacity="0.8" />
       <rect width="320" height="320" rx="160" fill="url(#shine)" />
     </svg>
   `;

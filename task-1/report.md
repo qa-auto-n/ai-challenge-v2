@@ -25,13 +25,12 @@ The implementation was driven by manually sanitized screenshots and element-by-e
 
 ## Data Replacement
 
-Because the final page still needed to function as a leaderboard, I replaced the source-facing content with fictional musician-themed data:
+Because the final page needed to function as a leaderboard, I used fictional professional-themed data:
 
-- names → fictional musician names
-- titles/roles → music roles such as vocalist, producer, guitarist, or songwriter
-- group labels → fictional collectives or bands
-- contribution categories → `Live Performances`, `Studio Sessions`, and `Collaborations`
-- activity text → fictional music-related contributions generated from templates
-- avatars → locally generated non-source SVG portrait placeholders used only to preserve the visual structure of the leaderboard
+- names → fictional person names
+- titles/roles → fictional professional roles
+- group labels → fictional teams or units
+- activity text → fictional professional activities generated from templates
+- avatars → locally generated non-source portrait placeholders used only to preserve the visual structure of the leaderboard
 
 The goal was to preserve the structure and behavior of the leaderboard while ensuring that the final output contains only replacement content created for this task.
