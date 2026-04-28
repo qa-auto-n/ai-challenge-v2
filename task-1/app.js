@@ -363,7 +363,7 @@ function buildDataset(count) {
 
   for (let index = 0; index < count; index += 1) {
     const first = firstNames[index % firstNames.length];
-    const last = lastNames[(index * 7) % lastNames.length];
+    const last = lastNames[Math.floor(index / firstNames.length) % lastNames.length];
     const role = roles[(index * 5) % roles.length];
     const group = groups[(index * 3) % groups.length];
     const palette = palettes[index % palettes.length];
@@ -383,40 +383,36 @@ function buildDataset(count) {
 function buildStats(seed) {
   const stats = {};
   const years = ["2025"];
-  const profile = seed % 6;
+  const rankingBase = 227 - seed;
+  const scoreUnits = rankingBase + 4;
+  let educationTotal = Math.floor(scoreUnits / 4);
+  let publicSpeakingTotal = Math.floor(scoreUnits / 4);
+  let universityPartnershipTotal = scoreUnits - educationTotal - publicSpeakingTotal;
+
+  if (seed % 3 === 0) {
+    educationTotal += 2;
+    publicSpeakingTotal = Math.max(0, publicSpeakingTotal - 1);
+    universityPartnershipTotal = Math.max(0, universityPartnershipTotal - 1);
+  } else if (seed % 3 === 1) {
+    publicSpeakingTotal += 2;
+    educationTotal = Math.max(0, educationTotal - 1);
+    universityPartnershipTotal = Math.max(0, universityPartnershipTotal - 1);
+  } else {
+    universityPartnershipTotal += 2;
+    educationTotal = Math.max(0, educationTotal - 1);
+    publicSpeakingTotal = Math.max(0, publicSpeakingTotal - 1);
+  }
+
+  const educationDistribution = splitAcrossQuarters(educationTotal, seed + 3);
+  const publicSpeakingDistribution = splitAcrossQuarters(publicSpeakingTotal, seed + 11);
+  const universityPartnershipDistribution = splitAcrossQuarters(universityPartnershipTotal, seed + 19);
 
   years.forEach((year, yearIndex) => {
     stats[year] = {};
     ["Q1", "Q2", "Q3", "Q4"].forEach((quarter, quarterIndex) => {
-      let education = weightedCount(seed, yearIndex, quarterIndex, 7, 5);
-      let publicSpeaking = weightedCount(seed, yearIndex, quarterIndex, 11, 4);
-      let universityPartnership = weightedCount(seed, yearIndex, quarterIndex, 13, 2);
-
-      if (profile === 0) {
-        education = Math.max(1, education + 1);
-        publicSpeaking = Math.max(0, publicSpeaking - 2);
-        universityPartnership = 0;
-      } else if (profile === 1) {
-        education = 0;
-        publicSpeaking = Math.max(1, publicSpeaking + 1);
-        universityPartnership = Math.max(0, universityPartnership - 1);
-      } else if (profile === 2) {
-        education = Math.max(0, education - 2);
-        publicSpeaking = Math.max(1, publicSpeaking);
-        universityPartnership = 0;
-      } else if (profile === 3) {
-        education = Math.max(1, education);
-        publicSpeaking = 0;
-        universityPartnership = Math.max(0, universityPartnership - 1);
-      } else if (profile === 4) {
-        education = 0;
-        publicSpeaking = Math.max(0, publicSpeaking - 2);
-        universityPartnership = Math.max(1, universityPartnership);
-      } else {
-        education = Math.max(1, education);
-        publicSpeaking = Math.max(0, publicSpeaking - 1);
-        universityPartnership = 0;
-      }
+      const education = educationDistribution[quarterIndex];
+      const publicSpeaking = publicSpeakingDistribution[quarterIndex];
+      const universityPartnership = universityPartnershipDistribution[quarterIndex];
 
       stats[year][quarter] = {
         education,
@@ -427,6 +423,16 @@ function buildStats(seed) {
   });
 
   return stats;
+}
+
+function splitAcrossQuarters(total, seed) {
+  const values = [0, 0, 0, 0];
+
+  for (let i = 0; i < total; i += 1) {
+    values[(seed + i) % 4] += 1;
+  }
+
+  return values;
 }
 
 function buildActivities(entry, selectedCategory) {
@@ -475,18 +481,6 @@ function quarterToMonth(quarter) {
 
 function monthLabel(month) {
   return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][month - 1];
-}
-
-function weightedCount(seed, yearIndex, quarterIndex, factor, max) {
-  const base = Math.max(0, 14 - Math.floor(seed / 17));
-  const roll = seeded(seed * factor + yearIndex * 19 + quarterIndex * 23);
-  const normalized = Math.max(0, Math.min(max, Math.round((base * roll) / 2.5 - yearIndex)));
-  return normalized;
-}
-
-function seeded(value) {
-  const x = Math.sin(value * 999) * 10000;
-  return x - Math.floor(x);
 }
 
 function avatarPortraitUrl(index, palette) {
