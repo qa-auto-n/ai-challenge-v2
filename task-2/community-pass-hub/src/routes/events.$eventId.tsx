@@ -16,7 +16,24 @@ import { EventGallery } from "@/components/EventGallery";
 import { EventFeedback } from "@/components/EventFeedback";
 
 export const Route = createFileRoute("/events/$eventId")({
-  head: () => ({ meta: [{ title: "Event — CommunityPass" }] }),
+  loader: async ({ params }) => {
+    const { data } = await supabase
+      .from("events")
+      .select("title, description, cover_image_url")
+      .eq("id", params.eventId)
+      .maybeSingle();
+    return data ?? null;
+  },
+  head: ({ loaderData }) => ({
+    meta: [
+      { title: `${loaderData?.title ?? "Event"} — CommunityPass` },
+      { name: "description", content: loaderData?.description ?? "A community event on CommunityPass." },
+      { property: "og:title", content: loaderData?.title ?? "CommunityPass" },
+      { property: "og:description", content: loaderData?.description ?? "A community event on CommunityPass." },
+      { property: "og:type", content: "website" },
+      ...(loaderData?.cover_image_url ? [{ property: "og:image", content: loaderData.cover_image_url }] : []),
+    ],
+  }),
   component: EventDetail,
 });
 

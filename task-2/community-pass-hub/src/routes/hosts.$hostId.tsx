@@ -6,7 +6,24 @@ import { Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/hosts/$hostId")({
-  head: () => ({ meta: [{ title: "Host — CommunityPass" }] }),
+  loader: async ({ params }) => {
+    const { data } = await supabase
+      .from("hosts")
+      .select("name, bio, logo_url")
+      .eq("id", params.hostId)
+      .maybeSingle();
+    return data ?? null;
+  },
+  head: ({ loaderData }) => ({
+    meta: [
+      { title: `${loaderData?.name ?? "Host"} — CommunityPass` },
+      { name: "description", content: loaderData?.bio ?? "A community host on CommunityPass." },
+      { property: "og:title", content: loaderData?.name ?? "CommunityPass" },
+      { property: "og:description", content: loaderData?.bio ?? "A community host on CommunityPass." },
+      { property: "og:type", content: "website" },
+      ...(loaderData?.logo_url ? [{ property: "og:image", content: loaderData.logo_url }] : []),
+    ],
+  }),
   component: HostPage,
 });
 
@@ -19,7 +36,7 @@ function HostPage() {
       const [{ data: host }, { data: events }] = await Promise.all([
         supabase.from("hosts").select("*").eq("id", hostId).maybeSingle(),
         supabase.from("events").select("*").eq("host_id", hostId)
-          .eq("status", "published").eq("hidden", false).order("start_at"),
+          .eq("status", "published").eq("visibility", "public").eq("hidden", false).order("start_at"),
       ]);
       return { host, events: events ?? [] };
     },
