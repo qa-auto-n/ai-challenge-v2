@@ -27,7 +27,14 @@ function Index() {
         .order("start_at", { ascending: true })
         .limit(3);
       if (error) throw error;
-      return data;
+      const evs = data ?? [];
+      return Promise.all(evs.map(async (e) => {
+        const [g, w] = await Promise.all([
+          supabase.from("rsvps").select("id", { count: "exact", head: true }).eq("event_id", e.id).eq("status", "going"),
+          supabase.from("rsvps").select("id", { count: "exact", head: true }).eq("event_id", e.id).eq("status", "waitlist"),
+        ]);
+        return { ...e, goingCount: g.count ?? 0, waitlistCount: w.count ?? 0 };
+      }));
     },
   });
 
@@ -71,7 +78,7 @@ function Index() {
             <Link to="/explore" className="text-sm text-primary hover:underline">View all →</Link>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {data.map((e) => <EventCard key={e.id} event={e} hostName={e.hosts?.name} />)}
+            {data.map((e) => <EventCard key={e.id} event={e} hostName={e.hosts?.name} goingCount={e.goingCount} waitlistCount={e.waitlistCount} />)}
           </div>
         </section>
       )}

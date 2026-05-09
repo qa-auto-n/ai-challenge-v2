@@ -48,7 +48,7 @@ function AuthPage() {
     });
     setLoading(false);
     if (error) toast.error(error.message);
-    else toast.success("Account created — you're signed in.");
+    else toast.success("Account created! Check your email to confirm before signing in.");
   };
 
   return (

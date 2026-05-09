@@ -33,12 +33,20 @@ function HostPage() {
   const { data, isLoading } = useQuery({
     queryKey: ["host", hostId],
     queryFn: async () => {
-      const [{ data: host }, { data: events }] = await Promise.all([
+      const [{ data: host }, { data: rawEvents }] = await Promise.all([
         supabase.from("hosts").select("*").eq("id", hostId).maybeSingle(),
         supabase.from("events").select("*").eq("host_id", hostId)
           .eq("status", "published").eq("visibility", "public").eq("hidden", false).order("start_at"),
       ]);
-      return { host, events: events ?? [] };
+      const evs = rawEvents ?? [];
+      const events = await Promise.all(evs.map(async (e) => {
+        const [g, w] = await Promise.all([
+          supabase.from("rsvps").select("id", { count: "exact", head: true }).eq("event_id", e.id).eq("status", "going"),
+          supabase.from("rsvps").select("id", { count: "exact", head: true }).eq("event_id", e.id).eq("status", "waitlist"),
+        ]);
+        return { ...e, goingCount: g.count ?? 0, waitlistCount: w.count ?? 0 };
+      }));
+      return { host, events };
     },
   });
 
@@ -63,7 +71,7 @@ function HostPage() {
 
         <h2 className="mt-12 text-2xl font-semibold">Events</h2>
         <div className="mt-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {events.map((e) => <EventCard key={e.id} event={e} hostName={host.name} />)}
+          {events.map((e) => <EventCard key={e.id} event={e} hostName={host.name} goingCount={e.goingCount} waitlistCount={e.waitlistCount} />)}
         </div>
       </div>
     </SiteLayout>
