@@ -43,7 +43,8 @@ function AuthPage() {
   const signUp = async () => {
     setLoading(true);
     const { error } = await supabase.auth.signUp({
-      email, password,
+      email,
+      password,
       options: { data: { name }, emailRedirectTo: `${window.location.origin}${returnTo}` },
     });
     setLoading(false);
@@ -57,7 +58,10 @@ function AuthPage() {
         <Card>
           <CardHeader>
             <CardTitle>Welcome to CommunityPass</CardTitle>
-            <p className="text-sm text-muted-foreground">RSVP requires sign-in. You'll be returned to <code className="font-mono text-xs">{returnTo}</code>.</p>
+            <p className="text-sm text-muted-foreground">
+              RSVP requires sign-in. You'll be returned to{" "}
+              <code className="font-mono text-xs">{returnTo}</code>.
+            </p>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="signin">
@@ -66,15 +70,54 @@ function AuthPage() {
                 <TabsTrigger value="signup">Sign up</TabsTrigger>
               </TabsList>
               <TabsContent value="signin" className="space-y-4 pt-4">
-                <div><Label htmlFor="email">Email</Label><Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
-                <div><Label htmlFor="pw">Password</Label><Input id="pw" type="password" value={password} onChange={(e) => setPassword(e.target.value)} /></div>
-                <Button className="w-full" onClick={signIn} disabled={loading}>Sign in</Button>
+                <div>
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="pw">Password</Label>
+                  <Input
+                    id="pw"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                <Button className="w-full" onClick={signIn} disabled={loading}>
+                  Sign in
+                </Button>
               </TabsContent>
               <TabsContent value="signup" className="space-y-4 pt-4">
-                <div><Label htmlFor="name">Name</Label><Input id="name" value={name} onChange={(e) => setName(e.target.value)} /></div>
-                <div><Label htmlFor="email2">Email</Label><Input id="email2" type="email" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
-                <div><Label htmlFor="pw2">Password</Label><Input id="pw2" type="password" value={password} onChange={(e) => setPassword(e.target.value)} /></div>
-                <Button className="w-full" onClick={signUp} disabled={loading}>Create account</Button>
+                <div>
+                  <Label htmlFor="name">Name</Label>
+                  <Input id="name" value={name} onChange={(e) => setName(e.target.value)} />
+                </div>
+                <div>
+                  <Label htmlFor="email2">Email</Label>
+                  <Input
+                    id="email2"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="pw2">Password</Label>
+                  <Input
+                    id="pw2"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                <Button className="w-full" onClick={signUp} disabled={loading}>
+                  Create account
+                </Button>
               </TabsContent>
             </Tabs>
           </CardContent>

@@ -84,8 +84,7 @@ export const events: CommunityEvent[] = [
     timezone: "Europe/Berlin",
     venue: "Tech Hub Loft, 12 Garden St, Berlin",
     capacity: 80,
-    coverImageUrl:
-      "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&q=80",
+    coverImageUrl: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&q=80",
     visibility: "public",
     state: "published",
     isPaid: false,
@@ -104,8 +103,7 @@ export const events: CommunityEvent[] = [
     timezone: "Europe/Berlin",
     onlineLink: "https://meet.example.com/qa-night",
     capacity: 60,
-    coverImageUrl:
-      "https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=1200&q=80",
+    coverImageUrl: "https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=1200&q=80",
     visibility: "public",
     state: "published",
     isPaid: false,
@@ -116,11 +114,46 @@ export const events: CommunityEvent[] = [
 ];
 
 export const attendees: Attendee[] = [
-  { id: "a1", eventId: "evt-1", name: "Ada Lovelace", email: "ada@example.com", status: "going", ticketCode: "CP-AAA-111" },
-  { id: "a2", eventId: "evt-1", name: "Linus Torvalds", email: "linus@example.com", status: "going", ticketCode: "CP-AAA-112" },
-  { id: "a3", eventId: "evt-1", name: "Grace Hopper", email: "grace@example.com", status: "waitlist", ticketCode: "CP-AAA-113" },
-  { id: "a4", eventId: "evt-2", name: "Alan Turing", email: "alan@example.com", status: "checked-in", ticketCode: "CP-BBB-221" },
-  { id: "a5", eventId: "evt-2", name: "Margaret Hamilton", email: "margaret@example.com", status: "checked-in", ticketCode: "CP-BBB-222" },
+  {
+    id: "a1",
+    eventId: "evt-1",
+    name: "Ada Lovelace",
+    email: "ada@example.com",
+    status: "going",
+    ticketCode: "CP-AAA-111",
+  },
+  {
+    id: "a2",
+    eventId: "evt-1",
+    name: "Linus Torvalds",
+    email: "linus@example.com",
+    status: "going",
+    ticketCode: "CP-AAA-112",
+  },
+  {
+    id: "a3",
+    eventId: "evt-1",
+    name: "Grace Hopper",
+    email: "grace@example.com",
+    status: "waitlist",
+    ticketCode: "CP-AAA-113",
+  },
+  {
+    id: "a4",
+    eventId: "evt-2",
+    name: "Alan Turing",
+    email: "alan@example.com",
+    status: "checked-in",
+    ticketCode: "CP-BBB-221",
+  },
+  {
+    id: "a5",
+    eventId: "evt-2",
+    name: "Margaret Hamilton",
+    email: "margaret@example.com",
+    status: "checked-in",
+    ticketCode: "CP-BBB-222",
+  },
 ];
 
 export const myTickets: Ticket[] = [

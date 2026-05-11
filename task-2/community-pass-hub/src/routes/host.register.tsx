@@ -21,8 +21,9 @@ function HostRegister() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ name: "", logoUrl: "", bio: "", contactEmail: "" });
   const [loading, setLoading] = useState(false);
-  const update = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-    setForm({ ...form, [k]: e.target.value });
+  const update =
+    (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setForm({ ...form, [k]: e.target.value });
 
   const submit = async () => {
     if (!user) {
@@ -30,19 +31,32 @@ function HostRegister() {
       return;
     }
     setLoading(true);
-    const { data: host, error } = await supabase.from("hosts").insert({
-      name: form.name, logo_url: form.logoUrl || null, bio: form.bio || null,
-      contact_email: form.contactEmail, owner_user_id: user.id,
-    }).select().single();
+    const { data: host, error } = await supabase
+      .from("hosts")
+      .insert({
+        name: form.name,
+        logo_url: form.logoUrl || null,
+        bio: form.bio || null,
+        contact_email: form.contactEmail,
+        owner_user_id: user.id,
+      })
+      .select()
+      .single();
     if (error || !host) {
       toast.error(error?.message ?? "Failed");
-      setLoading(false); return;
+      setLoading(false);
+      return;
     }
     const { error: memberErr } = await supabase.from("host_members").insert({
-      host_id: host.id, user_id: user.id, role: "host",
+      host_id: host.id,
+      user_id: user.id,
+      role: "host",
     });
     setLoading(false);
-    if (memberErr) { toast.error(memberErr.message); return; }
+    if (memberErr) {
+      toast.error(memberErr.message);
+      return;
+    }
     toast.success("Host created!");
     navigate({ to: "/host/dashboard" });
   };
@@ -53,16 +67,44 @@ function HostRegister() {
         <h1 className="text-3xl font-bold">Become a host</h1>
         <p className="mt-1 text-muted-foreground">Tell us about your community.</p>
         <Card className="mt-6">
-          <CardHeader><CardTitle>Host profile</CardTitle></CardHeader>
+          <CardHeader>
+            <CardTitle>Host profile</CardTitle>
+          </CardHeader>
           <CardContent className="space-y-4">
-            <div><Label htmlFor="name">Organization name</Label><Input id="name" value={form.name} onChange={update("name")} /></div>
+            <div>
+              <Label htmlFor="name">Organization name</Label>
+              <Input id="name" value={form.name} onChange={update("name")} />
+            </div>
             <div>
               <Label>Logo</Label>
-              <ImageUpload bucket="host-logos" aspect="square" value={form.logoUrl} onChange={(url) => setForm({ ...form, logoUrl: url ?? "" })} label="Upload logo" />
+              <ImageUpload
+                bucket="host-logos"
+                aspect="square"
+                value={form.logoUrl}
+                onChange={(url) => setForm({ ...form, logoUrl: url ?? "" })}
+                label="Upload logo"
+              />
             </div>
-            <div><Label htmlFor="bio">Short bio</Label><Textarea id="bio" rows={3} value={form.bio} onChange={update("bio")} /></div>
-            <div><Label htmlFor="email">Contact email</Label><Input id="email" type="email" value={form.contactEmail} onChange={update("contactEmail")} /></div>
-            <Button className="w-full" onClick={submit} disabled={loading || !form.name || !form.contactEmail}>Submit</Button>
+            <div>
+              <Label htmlFor="bio">Short bio</Label>
+              <Textarea id="bio" rows={3} value={form.bio} onChange={update("bio")} />
+            </div>
+            <div>
+              <Label htmlFor="email">Contact email</Label>
+              <Input
+                id="email"
+                type="email"
+                value={form.contactEmail}
+                onChange={update("contactEmail")}
+              />
+            </div>
+            <Button
+              className="w-full"
+              onClick={submit}
+              disabled={loading || !form.name || !form.contactEmail}
+            >
+              Submit
+            </Button>
           </CardContent>
         </Card>
       </div>

@@ -27,11 +27,19 @@ export const Route = createFileRoute("/events/$eventId")({
   head: ({ loaderData }) => ({
     meta: [
       { title: `${loaderData?.title ?? "Event"} — CommunityPass` },
-      { name: "description", content: loaderData?.description ?? "A community event on CommunityPass." },
+      {
+        name: "description",
+        content: loaderData?.description ?? "A community event on CommunityPass.",
+      },
       { property: "og:title", content: loaderData?.title ?? "CommunityPass" },
-      { property: "og:description", content: loaderData?.description ?? "A community event on CommunityPass." },
+      {
+        property: "og:description",
+        content: loaderData?.description ?? "A community event on CommunityPass.",
+      },
       { property: "og:type", content: "website" },
-      ...(loaderData?.cover_image_url ? [{ property: "og:image", content: loaderData.cover_image_url }] : []),
+      ...(loaderData?.cover_image_url
+        ? [{ property: "og:image", content: loaderData.cover_image_url }]
+        : []),
     ],
   }),
   component: EventDetail,
@@ -49,8 +57,16 @@ function EventDetail() {
     queryFn: async () => {
       const [{ data: event, error }, going, waitlist] = await Promise.all([
         supabase.from("events").select("*, hosts(*)").eq("id", eventId).maybeSingle(),
-        supabase.from("rsvps").select("id", { count: "exact", head: true }).eq("event_id", eventId).eq("status", "going"),
-        supabase.from("rsvps").select("id", { count: "exact", head: true }).eq("event_id", eventId).eq("status", "waitlist"),
+        supabase
+          .from("rsvps")
+          .select("id", { count: "exact", head: true })
+          .eq("event_id", eventId)
+          .eq("status", "going"),
+        supabase
+          .from("rsvps")
+          .select("id", { count: "exact", head: true })
+          .eq("event_id", eventId)
+          .eq("status", "waitlist"),
       ]);
       if (error) throw error;
       return { event, goingCount: going.count ?? 0, waitlistCount: waitlist.count ?? 0 };
@@ -62,8 +78,13 @@ function EventDetail() {
     enabled: !!user,
     refetchInterval: 15000,
     queryFn: async () => {
-      const { data } = await supabase.from("rsvps").select("*")
-        .eq("event_id", eventId).eq("user_id", user!.id).neq("status", "cancelled").maybeSingle();
+      const { data } = await supabase
+        .from("rsvps")
+        .select("*")
+        .eq("event_id", eventId)
+        .eq("user_id", user!.id)
+        .neq("status", "cancelled")
+        .maybeSingle();
       return data;
     },
   });
@@ -81,16 +102,26 @@ function EventDetail() {
     mutationFn: async () => {
       if (!user) throw new Error("Not signed in");
       const { error } = await supabase.from("rsvps").insert({
-        event_id: eventId, user_id: user.id, status: "going", ticket_code: genTicketCode(),
+        event_id: eventId,
+        user_id: user.id,
+        status: "going",
+        ticket_code: genTicketCode(),
       });
       if (error) {
-        if (error.code === "23505") throw new Error("You already have an active RSVP for this event.");
+        if (error.code === "23505")
+          throw new Error("You already have an active RSVP for this event.");
         throw error;
       }
     },
     onSuccess: async () => {
       // Read back to know if going or waitlist
-      const { data: r } = await supabase.from("rsvps").select("status").eq("event_id", eventId).eq("user_id", user!.id).neq("status", "cancelled").maybeSingle();
+      const { data: r } = await supabase
+        .from("rsvps")
+        .select("status")
+        .eq("event_id", eventId)
+        .eq("user_id", user!.id)
+        .neq("status", "cancelled")
+        .maybeSingle();
       if (r?.status === "waitlist") toast.message("Event is full — you've joined the waitlist.");
       else toast.success("RSVP confirmed!");
       qc.invalidateQueries({ queryKey: ["event", eventId] });
@@ -101,7 +132,10 @@ function EventDetail() {
 
   const cancelMutation = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("rsvps").update({ status: "cancelled", checked_in_at: null }).eq("id", id);
+      const { error } = await supabase
+        .from("rsvps")
+        .update({ status: "cancelled", checked_in_at: null })
+        .eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -112,8 +146,23 @@ function EventDetail() {
     onError: (e: Error) => toast.error(e.message),
   });
 
-  if (isLoading) return <SiteLayout><div className="container mx-auto p-20 text-center">Loading…</div></SiteLayout>;
-  if (!data?.event) return <SiteLayout><div className="container mx-auto p-20 text-center"><h1 className="text-2xl font-bold">Event not available</h1><p className="mt-2 text-muted-foreground">This event may be hidden, unpublished, or no longer exists.</p></div></SiteLayout>;
+  if (isLoading)
+    return (
+      <SiteLayout>
+        <div className="container mx-auto p-20 text-center">Loading…</div>
+      </SiteLayout>
+    );
+  if (!data?.event)
+    return (
+      <SiteLayout>
+        <div className="container mx-auto p-20 text-center">
+          <h1 className="text-2xl font-bold">Event not available</h1>
+          <p className="mt-2 text-muted-foreground">
+            This event may be hidden, unpublished, or no longer exists.
+          </p>
+        </div>
+      </SiteLayout>
+    );
 
   const event = data.event;
   const host = event.hosts;
@@ -132,7 +181,11 @@ function EventDetail() {
     <SiteLayout>
       {event.cover_image_url && (
         <div className="aspect-[3/1] w-full overflow-hidden bg-muted">
-          <img src={event.cover_image_url} alt={event.title} className="h-full w-full object-cover" />
+          <img
+            src={event.cover_image_url}
+            alt={event.title}
+            className="h-full w-full object-cover"
+          />
         </div>
       )}
       <div className="container mx-auto grid gap-8 px-4 py-10 lg:grid-cols-3">
@@ -155,24 +208,38 @@ function EventDetail() {
             <div className="flex items-start gap-3">
               <Calendar className="mt-0.5 h-5 w-5 text-muted-foreground" />
               <div>
-                <p className="text-sm font-medium">{formatDateTime(event.start_at, event.timezone)}</p>
-                <p className="text-xs text-muted-foreground">to {formatDateTime(event.end_at, event.timezone)}</p>
+                <p className="text-sm font-medium">
+                  {formatDateTime(event.start_at, event.timezone)}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  to {formatDateTime(event.end_at, event.timezone)}
+                </p>
                 <p className="text-xs text-muted-foreground">{event.timezone}</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              {event.online_link ? <Video className="mt-0.5 h-5 w-5 text-muted-foreground" /> : <MapPin className="mt-0.5 h-5 w-5 text-muted-foreground" />}
+              {event.online_link ? (
+                <Video className="mt-0.5 h-5 w-5 text-muted-foreground" />
+              ) : (
+                <MapPin className="mt-0.5 h-5 w-5 text-muted-foreground" />
+              )}
               <p className="text-sm">{event.online_link ?? event.venue_address}</p>
             </div>
             <div className="flex items-start gap-3">
               <Users className="mt-0.5 h-5 w-5 text-muted-foreground" />
-              <p className="text-sm">{data.goingCount}/{event.capacity} going · {data.waitlistCount} waitlist</p>
+              <p className="text-sm">
+                {data.goingCount}/{event.capacity} going · {data.waitlistCount} waitlist
+              </p>
             </div>
 
             {past ? (
-              <div className="rounded-md bg-muted p-3 text-center text-sm text-muted-foreground">This event has ended.</div>
+              <div className="rounded-md bg-muted p-3 text-center text-sm text-muted-foreground">
+                This event has ended.
+              </div>
             ) : !publiclyRsvpable ? (
-              <div className="rounded-md bg-muted p-3 text-center text-sm text-muted-foreground">RSVP not available.</div>
+              <div className="rounded-md bg-muted p-3 text-center text-sm text-muted-foreground">
+                RSVP not available.
+              </div>
             ) : myRsvp ? (
               <div className="space-y-3">
                 <div className="rounded-md bg-accent p-3 text-center text-sm">
@@ -193,14 +260,24 @@ function EventDetail() {
               </Button>
             )}
 
-            <ReportDialog targetType="event" targetId={eventId} returnTo={`/events/${eventId}`}
-              triggerLabel="Report event" />
+            <ReportDialog
+              targetType="event"
+              targetId={eventId}
+              returnTo={`/events/${eventId}`}
+              triggerLabel="Report event"
+            />
           </div>
 
           {host && (
-            <Link to="/hosts/$hostId" params={{ hostId: host.id }} className="block rounded-lg border border-border p-4 hover:bg-accent">
+            <Link
+              to="/hosts/$hostId"
+              params={{ hostId: host.id }}
+              className="block rounded-lg border border-border p-4 hover:bg-accent"
+            >
               <div className="flex items-center gap-3">
-                {host.logo_url && <img src={host.logo_url} alt={host.name} className="h-10 w-10 rounded-full" />}
+                {host.logo_url && (
+                  <img src={host.logo_url} alt={host.name} className="h-10 w-10 rounded-full" />
+                )}
                 <div>
                   <p className="text-xs text-muted-foreground">Hosted by</p>
                   <p className="font-medium">{host.name}</p>

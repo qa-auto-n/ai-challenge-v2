@@ -13,7 +13,13 @@ interface Props {
   aspect?: "square" | "video";
 }
 
-export function ImageUpload({ bucket, value, onChange, label = "Upload image", aspect = "video" }: Props) {
+export function ImageUpload({
+  bucket,
+  value,
+  onChange,
+  label = "Upload image",
+  aspect = "video",
+}: Props) {
   const { user } = useAuth();
   const inputRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
@@ -27,7 +33,9 @@ export function ImageUpload({ bucket, value, onChange, label = "Upload image", a
     try {
       const ext = file.name.split(".").pop() ?? "bin";
       const path = `${user.id}/${crypto.randomUUID()}.${ext}`;
-      const { error } = await supabase.storage.from(bucket).upload(path, file, { cacheControl: "3600", upsert: false });
+      const { error } = await supabase.storage
+        .from(bucket)
+        .upload(path, file, { cacheControl: "3600", upsert: false });
       if (error) throw error;
       const { data } = supabase.storage.from(bucket).getPublicUrl(path);
       onChange(data.publicUrl);
@@ -41,11 +49,15 @@ export function ImageUpload({ bucket, value, onChange, label = "Upload image", a
 
   return (
     <div className="space-y-2">
-      <div className={`relative overflow-hidden rounded-lg border border-dashed border-border bg-muted ${aspect === "video" ? "aspect-video" : "aspect-square w-32"}`}>
+      <div
+        className={`relative overflow-hidden rounded-lg border border-dashed border-border bg-muted ${aspect === "video" ? "aspect-video" : "aspect-square w-32"}`}
+      >
         {value ? (
           <img src={value} alt="" className="h-full w-full object-cover" />
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-sm text-muted-foreground">No image</div>
+          <div className="flex h-full w-full items-center justify-center text-sm text-muted-foreground">
+            No image
+          </div>
         )}
         {value && (
           <button
@@ -69,7 +81,13 @@ export function ImageUpload({ bucket, value, onChange, label = "Upload image", a
           e.target.value = "";
         }}
       />
-      <Button type="button" variant="outline" size="sm" disabled={busy} onClick={() => inputRef.current?.click()}>
+      <Button
+        type="button"
+        variant="outline"
+        size="sm"
+        disabled={busy}
+        onClick={() => inputRef.current?.click()}
+      >
         <Upload className="h-4 w-4" /> {busy ? "Uploading…" : label}
       </Button>
     </div>

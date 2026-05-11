@@ -23,7 +23,8 @@ export function SiteHeader() {
     links.push({ to: "/host/reports", label: "Reports" });
   }
 
-  const navLinkClass = "rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground";
+  const navLinkClass =
+    "rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground";
   const navLinkActiveClass = "rounded-md px-3 py-2 text-sm font-medium text-foreground bg-accent";
 
   return (
@@ -37,7 +38,12 @@ export function SiteHeader() {
         {/* Desktop nav */}
         <nav className="hidden items-center gap-1 md:flex">
           {links.map((l) => (
-            <Link key={l.to} to={l.to} className={navLinkClass} activeProps={{ className: navLinkActiveClass }}>
+            <Link
+              key={l.to}
+              to={l.to}
+              className={navLinkClass}
+              activeProps={{ className: navLinkActiveClass }}
+            >
               {l.label}
             </Link>
           ))}
@@ -47,12 +53,25 @@ export function SiteHeader() {
           {user ? (
             <>
               <span className="hidden text-sm text-muted-foreground sm:inline">{user.email}</span>
-              <Button variant="ghost" size="sm" onClick={() => signOut()} className="hidden md:inline-flex">Sign out</Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => signOut()}
+                className="hidden md:inline-flex"
+              >
+                Sign out
+              </Button>
             </>
           ) : (
             <>
-              <Link to="/auth" className="hidden md:inline-flex"><Button variant="ghost" size="sm">Sign in</Button></Link>
-              <Link to="/host/register" className="hidden md:inline-flex"><Button size="sm">Become a host</Button></Link>
+              <Link to="/auth" className="hidden md:inline-flex">
+                <Button variant="ghost" size="sm">
+                  Sign in
+                </Button>
+              </Link>
+              <Link to="/host/register" className="hidden md:inline-flex">
+                <Button size="sm">Become a host</Button>
+              </Link>
             </>
           )}
 
@@ -66,8 +85,13 @@ export function SiteHeader() {
             <SheetContent side="right" className="w-64">
               <nav className="mt-6 flex flex-col gap-1">
                 {links.map((l) => (
-                  <Link key={l.to} to={l.to} className={navLinkClass} activeProps={{ className: navLinkActiveClass }}
-                    onClick={() => setOpen(false)}>
+                  <Link
+                    key={l.to}
+                    to={l.to}
+                    className={navLinkClass}
+                    activeProps={{ className: navLinkActiveClass }}
+                    onClick={() => setOpen(false)}
+                  >
                     {l.label}
                   </Link>
                 ))}
@@ -75,12 +99,29 @@ export function SiteHeader() {
                   {user ? (
                     <>
                       <p className="px-3 text-xs text-muted-foreground truncate">{user.email}</p>
-                      <Button variant="ghost" size="sm" onClick={() => { signOut(); setOpen(false); }}>Sign out</Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          signOut();
+                          setOpen(false);
+                        }}
+                      >
+                        Sign out
+                      </Button>
                     </>
                   ) : (
                     <>
-                      <Link to="/auth" onClick={() => setOpen(false)}><Button variant="ghost" size="sm" className="w-full">Sign in</Button></Link>
-                      <Link to="/host/register" onClick={() => setOpen(false)}><Button size="sm" className="w-full">Become a host</Button></Link>
+                      <Link to="/auth" onClick={() => setOpen(false)}>
+                        <Button variant="ghost" size="sm" className="w-full">
+                          Sign in
+                        </Button>
+                      </Link>
+                      <Link to="/host/register" onClick={() => setOpen(false)}>
+                        <Button size="sm" className="w-full">
+                          Become a host
+                        </Button>
+                      </Link>
                     </>
                   )}
                 </div>

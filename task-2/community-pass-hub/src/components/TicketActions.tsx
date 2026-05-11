@@ -1,8 +1,14 @@
 import { QRCodeSVG } from "qrcode.react";
 import { Button } from "@/components/ui/button";
 import {
-  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
-  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { CalendarPlus, X } from "lucide-react";
@@ -11,7 +17,10 @@ import type { EventRow, RsvpRow } from "@/lib/db";
 
 interface Props {
   rsvp: Pick<RsvpRow, "id" | "status" | "ticket_code">;
-  event: Pick<EventRow, "id" | "title" | "description" | "start_at" | "end_at" | "venue_address" | "online_link">;
+  event: Pick<
+    EventRow,
+    "id" | "title" | "description" | "start_at" | "end_at" | "venue_address" | "online_link"
+  >;
   onCancel: (rsvpId: string) => void;
   cancelling?: boolean;
   qrSize?: number;
@@ -40,7 +49,9 @@ export function TicketActions({ rsvp, event, onCancel, cancelling, qrSize = 96 }
           <QRCodeSVG value={rsvp.ticket_code} size={qrSize} />
         </div>
         <code className="font-mono text-xs text-muted-foreground">{rsvp.ticket_code}</code>
-        {isWaitlist && <span className="text-[10px] text-muted-foreground">Not valid for entry</span>}
+        {isWaitlist && (
+          <span className="text-[10px] text-muted-foreground">Not valid for entry</span>
+        )}
       </div>
       <div className="flex flex-wrap gap-2">
         <Button variant="outline" size="sm" onClick={addToCalendar}>

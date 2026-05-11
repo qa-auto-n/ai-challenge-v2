@@ -13,8 +13,12 @@ export function NoAccess({ message, returnTo }: { message?: string; returnTo?: s
           {message ?? "You do not have permission to access this page."}
         </p>
         <div className="mt-6 flex justify-center gap-2">
-          <Link to={(returnTo ?? "/explore") as "/explore"}><Button>Go back</Button></Link>
-          <Link to="/"><Button variant="outline">Home</Button></Link>
+          <Link to={(returnTo ?? "/explore") as "/explore"}>
+            <Button>Go back</Button>
+          </Link>
+          <Link to="/">
+            <Button variant="outline">Home</Button>
+          </Link>
         </div>
       </div>
     </SiteLayout>

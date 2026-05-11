@@ -21,7 +21,11 @@ export function InviteManager({ hostId }: { hostId: string }) {
   const { data: invites = [] } = useQuery({
     queryKey: ["host-invites", hostId],
     queryFn: async () => {
-      const { data } = await supabase.from("host_invites").select("*").eq("host_id", hostId).order("created_at", { ascending: false });
+      const { data } = await supabase
+        .from("host_invites")
+        .select("*")
+        .eq("host_id", hostId)
+        .order("created_at", { ascending: false });
       return data ?? [];
     },
   });
@@ -30,11 +34,17 @@ export function InviteManager({ hostId }: { hostId: string }) {
     mutationFn: async (role: "host" | "checker") => {
       if (!user) throw new Error("Sign in required");
       const { error } = await supabase.from("host_invites").insert({
-        host_id: hostId, role, token: genToken(), created_by_user_id: user.id,
+        host_id: hostId,
+        role,
+        token: genToken(),
+        created_by_user_id: user.id,
       });
       if (error) throw error;
     },
-    onSuccess: () => { toast.success("Invite link created"); qc.invalidateQueries({ queryKey: ["host-invites", hostId] }); },
+    onSuccess: () => {
+      toast.success("Invite link created");
+      qc.invalidateQueries({ queryKey: ["host-invites", hostId] });
+    },
     onError: (e: Error) => toast.error(e.message),
   });
 
@@ -43,7 +53,10 @@ export function InviteManager({ hostId }: { hostId: string }) {
       const { error } = await supabase.from("host_invites").delete().eq("id", id);
       if (error) throw error;
     },
-    onSuccess: () => { toast.success("Invite removed"); qc.invalidateQueries({ queryKey: ["host-invites", hostId] }); },
+    onSuccess: () => {
+      toast.success("Invite removed");
+      qc.invalidateQueries({ queryKey: ["host-invites", hostId] });
+    },
     onError: (e: Error) => toast.error(e.message),
   });
 
@@ -60,8 +73,17 @@ export function InviteManager({ hostId }: { hostId: string }) {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex flex-wrap gap-2">
-          <Button size="sm" onClick={() => create.mutate("host")} disabled={create.isPending}>Create Host Invite Link</Button>
-          <Button size="sm" variant="secondary" onClick={() => create.mutate("checker")} disabled={create.isPending}>Create Checker Invite Link</Button>
+          <Button size="sm" onClick={() => create.mutate("host")} disabled={create.isPending}>
+            Create Host Invite Link
+          </Button>
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={() => create.mutate("checker")}
+            disabled={create.isPending}
+          >
+            Create Checker Invite Link
+          </Button>
         </div>
         {invites.length === 0 ? (
           <p className="text-sm text-muted-foreground">No invite links yet.</p>
@@ -71,12 +93,28 @@ export function InviteManager({ hostId }: { hostId: string }) {
               <li key={i.id} className="flex flex-wrap items-center justify-between gap-2 p-3">
                 <div className="flex items-center gap-2">
                   <Badge variant={i.role === "host" ? "default" : "secondary"}>{i.role}</Badge>
-                  <code className="font-mono text-xs text-muted-foreground break-all">{origin}/invite/{i.token}</code>
+                  <code className="font-mono text-xs text-muted-foreground break-all">
+                    {origin}/invite/{i.token}
+                  </code>
                   {i.used_by_user_id && <Badge variant="outline">used</Badge>}
                 </div>
                 <div className="flex gap-1">
-                  <Button size="icon" variant="ghost" onClick={() => copy(i.token)} aria-label="Copy invite URL"><Copy className="h-4 w-4" /></Button>
-                  <Button size="icon" variant="ghost" onClick={() => remove.mutate(i.id)} aria-label="Delete invite"><Trash2 className="h-4 w-4" /></Button>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => copy(i.token)}
+                    aria-label="Copy invite URL"
+                  >
+                    <Copy className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => remove.mutate(i.id)}
+                    aria-label="Delete invite"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
                 </div>
               </li>
             ))}

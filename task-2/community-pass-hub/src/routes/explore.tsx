@@ -27,17 +27,29 @@ function Explore() {
       const { data, error } = await supabase
         .from("events")
         .select("*, hosts(name)")
-        .eq("status", "published").eq("visibility", "public").eq("hidden", false)
+        .eq("status", "published")
+        .eq("visibility", "public")
+        .eq("hidden", false)
         .order("start_at", { ascending: true });
       if (error) throw error;
       const evs = data ?? [];
-      return Promise.all(evs.map(async (e) => {
-        const [g, w] = await Promise.all([
-          supabase.from("rsvps").select("id", { count: "exact", head: true }).eq("event_id", e.id).eq("status", "going"),
-          supabase.from("rsvps").select("id", { count: "exact", head: true }).eq("event_id", e.id).eq("status", "waitlist"),
-        ]);
-        return { ...e, goingCount: g.count ?? 0, waitlistCount: w.count ?? 0 };
-      }));
+      return Promise.all(
+        evs.map(async (e) => {
+          const [g, w] = await Promise.all([
+            supabase
+              .from("rsvps")
+              .select("id", { count: "exact", head: true })
+              .eq("event_id", e.id)
+              .eq("status", "going"),
+            supabase
+              .from("rsvps")
+              .select("id", { count: "exact", head: true })
+              .eq("event_id", e.id)
+              .eq("status", "waitlist"),
+          ]);
+          return { ...e, goingCount: g.count ?? 0, waitlistCount: w.count ?? 0 };
+        }),
+      );
     },
   });
 
@@ -45,7 +57,8 @@ function Explore() {
     return events.filter((e) => {
       if (!includePast && isPast(e)) return false;
       if (q && !e.title.toLowerCase().includes(q.toLowerCase())) return false;
-      if (location && !(e.venue_address ?? "").toLowerCase().includes(location.toLowerCase())) return false;
+      if (location && !(e.venue_address ?? "").toLowerCase().includes(location.toLowerCase()))
+        return false;
       if (from && new Date(e.start_at) < new Date(from)) return false;
       if (to && new Date(e.start_at) > new Date(to)) return false;
       return true;
@@ -59,10 +72,27 @@ function Explore() {
         <p className="mt-1 text-muted-foreground">Discover upcoming community gatherings.</p>
 
         <div className="mt-6 grid gap-3 rounded-lg border border-border bg-card p-4 sm:grid-cols-2 lg:grid-cols-5">
-          <div><Label htmlFor="q">Search</Label><Input id="q" placeholder="Title…" value={q} onChange={(e) => setQ(e.target.value)} /></div>
-          <div><Label htmlFor="from">From</Label><Input id="from" type="date" value={from} onChange={(e) => setFrom(e.target.value)} /></div>
-          <div><Label htmlFor="to">To</Label><Input id="to" type="date" value={to} onChange={(e) => setTo(e.target.value)} /></div>
-          <div><Label htmlFor="loc">Location</Label><Input id="loc" placeholder="City or venue" value={location} onChange={(e) => setLocation(e.target.value)} /></div>
+          <div>
+            <Label htmlFor="q">Search</Label>
+            <Input id="q" placeholder="Title…" value={q} onChange={(e) => setQ(e.target.value)} />
+          </div>
+          <div>
+            <Label htmlFor="from">From</Label>
+            <Input id="from" type="date" value={from} onChange={(e) => setFrom(e.target.value)} />
+          </div>
+          <div>
+            <Label htmlFor="to">To</Label>
+            <Input id="to" type="date" value={to} onChange={(e) => setTo(e.target.value)} />
+          </div>
+          <div>
+            <Label htmlFor="loc">Location</Label>
+            <Input
+              id="loc"
+              placeholder="City or venue"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+            />
+          </div>
           <div className="flex items-end gap-2">
             <Switch id="past" checked={includePast} onCheckedChange={setIncludePast} />
             <Label htmlFor="past">Include past</Label>
@@ -76,7 +106,15 @@ function Explore() {
           </div>
         ) : (
           <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((e) => <EventCard key={e.id} event={e} hostName={e.hosts?.name} goingCount={e.goingCount} waitlistCount={e.waitlistCount} />)}
+            {filtered.map((e) => (
+              <EventCard
+                key={e.id}
+                event={e}
+                hostName={e.hosts?.name}
+                goingCount={e.goingCount}
+                waitlistCount={e.waitlistCount}
+              />
+            ))}
           </div>
         )}
       </div>

@@ -17,7 +17,13 @@ interface Props {
 
 const HEADERS = ["name", "email", "RSVP status", "check-in time"];
 
-export function CsvExportButton({ label, eventId, eventTitle, variant = "rsvps", canExport = true }: Props) {
+export function CsvExportButton({
+  label,
+  eventId,
+  eventTitle,
+  variant = "rsvps",
+  canExport = true,
+}: Props) {
   const handleClick = async () => {
     if (!canExport) {
       toast.error("You do not have permission to export this data.");
@@ -35,8 +41,11 @@ export function CsvExportButton({ label, eventId, eventTitle, variant = "rsvps",
     let rsvps = data ?? [];
     if (variant === "attendance") {
       // Going + Waitlist always; Cancelled only if previously checked-in.
-      rsvps = rsvps.filter((r) =>
-        r.status === "going" || r.status === "waitlist" || (r.status === "cancelled" && r.checked_in_at)
+      rsvps = rsvps.filter(
+        (r) =>
+          r.status === "going" ||
+          r.status === "waitlist" ||
+          (r.status === "cancelled" && r.checked_in_at),
       );
     }
     const userIds = Array.from(new Set(rsvps.map((r) => r.user_id)));

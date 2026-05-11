@@ -23,8 +23,12 @@ export function EventGallery({ eventId }: Props) {
   const { data: approved = [] } = useQuery({
     queryKey: ["gallery-approved", eventId],
     queryFn: async () => {
-      const { data } = await supabase.from("gallery_photos").select("id, image_url, created_at")
-        .eq("event_id", eventId).eq("status", "approved").order("created_at", { ascending: false });
+      const { data } = await supabase
+        .from("gallery_photos")
+        .select("id, image_url, created_at")
+        .eq("event_id", eventId)
+        .eq("status", "approved")
+        .order("created_at", { ascending: false });
       return data ?? [];
     },
   });
@@ -33,8 +37,11 @@ export function EventGallery({ eventId }: Props) {
     queryKey: ["gallery-mine", eventId, user?.id],
     enabled: !!user,
     queryFn: async () => {
-      const { data } = await supabase.from("gallery_photos").select("id, image_url, status, created_at")
-        .eq("event_id", eventId).eq("uploaded_by_user_id", user!.id)
+      const { data } = await supabase
+        .from("gallery_photos")
+        .select("id, image_url, status, created_at")
+        .eq("event_id", eventId)
+        .eq("uploaded_by_user_id", user!.id)
         .order("created_at", { ascending: false });
       return (data ?? []).filter((p) => p.status !== "approved");
     },
@@ -48,10 +55,16 @@ export function EventGallery({ eventId }: Props) {
     if (!user || !pendingUrl) return;
     setSubmitting(true);
     const { error } = await supabase.from("gallery_photos").insert({
-      event_id: eventId, image_url: pendingUrl, uploaded_by_user_id: user.id, status: "pending",
+      event_id: eventId,
+      image_url: pendingUrl,
+      uploaded_by_user_id: user.id,
+      status: "pending",
     });
     setSubmitting(false);
-    if (error) { toast.error(error.message); return; }
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("Photo uploaded and waiting for host approval.");
     setPendingUrl(null);
     qc.invalidateQueries({ queryKey: ["gallery-mine", eventId] });
@@ -68,11 +81,24 @@ export function EventGallery({ eventId }: Props) {
       ) : (
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {approved.map((p) => (
-            <div key={p.id} className="group relative overflow-hidden rounded-md border border-border">
-              <img src={p.image_url} alt="" className="aspect-square w-full object-cover" loading="lazy" />
+            <div
+              key={p.id}
+              className="group relative overflow-hidden rounded-md border border-border"
+            >
+              <img
+                src={p.image_url}
+                alt=""
+                className="aspect-square w-full object-cover"
+                loading="lazy"
+              />
               <div className="absolute right-1 top-1 opacity-0 transition-opacity group-hover:opacity-100">
-                <ReportDialog targetType="photo" targetId={p.id} returnTo={`/events/${eventId}`}
-                  triggerLabel="Report" variant="outline" />
+                <ReportDialog
+                  targetType="photo"
+                  targetId={p.id}
+                  returnTo={`/events/${eventId}`}
+                  triggerLabel="Report"
+                  variant="outline"
+                />
               </div>
             </div>
           ))}
@@ -99,12 +125,21 @@ export function EventGallery({ eventId }: Props) {
 
       <div className="rounded-lg border border-border p-4">
         <h3 className="font-semibold">Share a photo</h3>
-        <p className="mb-3 text-sm text-muted-foreground">Photos appear in the gallery after host approval.</p>
+        <p className="mb-3 text-sm text-muted-foreground">
+          Photos appear in the gallery after host approval.
+        </p>
         {!user ? (
-          <Button variant="outline" onClick={onUploadClick}>Sign in to upload</Button>
+          <Button variant="outline" onClick={onUploadClick}>
+            Sign in to upload
+          </Button>
         ) : (
           <>
-            <ImageUpload bucket="gallery-photos" value={pendingUrl} onChange={setPendingUrl} label="Upload photo" />
+            <ImageUpload
+              bucket="gallery-photos"
+              value={pendingUrl}
+              onChange={setPendingUrl}
+              label="Upload photo"
+            />
             {pendingUrl && (
               <Button className="mt-3" size="sm" onClick={submit} disabled={submitting}>
                 Submit for review

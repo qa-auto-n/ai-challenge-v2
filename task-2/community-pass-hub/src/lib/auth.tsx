@@ -9,14 +9,21 @@ interface AuthCtx {
   signOut: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthCtx>({ session: null, user: null, loading: true, signOut: async () => {} });
+const AuthContext = createContext<AuthCtx>({
+  session: null,
+  user: null,
+  loading: true,
+  signOut: async () => {},
+});
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, s) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_e, s) => {
       setSession(s);
       setLoading(false);
     });

@@ -25,8 +25,11 @@ export function EventFeedback({ eventId, endAt }: Props) {
     queryKey: ["feedback", eventId],
     enabled: ended,
     queryFn: async () => {
-      const { data } = await supabase.from("feedback").select("id, user_id, rating, comment, created_at")
-        .eq("event_id", eventId).order("created_at", { ascending: false });
+      const { data } = await supabase
+        .from("feedback")
+        .select("id, user_id, rating, comment, created_at")
+        .eq("event_id", eventId)
+        .order("created_at", { ascending: false });
       return data ?? [];
     },
   });
@@ -35,8 +38,13 @@ export function EventFeedback({ eventId, endAt }: Props) {
     queryKey: ["my-rsvp-any", eventId, user?.id],
     enabled: !!user && ended,
     queryFn: async () => {
-      const { data } = await supabase.from("rsvps").select("status")
-        .eq("event_id", eventId).eq("user_id", user!.id).neq("status", "cancelled").maybeSingle();
+      const { data } = await supabase
+        .from("rsvps")
+        .select("status")
+        .eq("event_id", eventId)
+        .eq("user_id", user!.id)
+        .neq("status", "cancelled")
+        .maybeSingle();
       return data;
     },
   });
@@ -46,15 +54,25 @@ export function EventFeedback({ eventId, endAt }: Props) {
 
   const submit = async () => {
     if (!user) return;
-    if (rating < 1 || rating > 5) { toast.error("Please select a rating"); return; }
+    if (rating < 1 || rating > 5) {
+      toast.error("Please select a rating");
+      return;
+    }
     setSubmitting(true);
     const { error } = await supabase.from("feedback").insert({
-      event_id: eventId, user_id: user.id, rating, comment: comment.trim() || null,
+      event_id: eventId,
+      user_id: user.id,
+      rating,
+      comment: comment.trim() || null,
     });
     setSubmitting(false);
-    if (error) { toast.error(error.message); return; }
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success("Feedback submitted. Thank you!");
-    setComment(""); setRating(0);
+    setComment("");
+    setRating(0);
     qc.invalidateQueries({ queryKey: ["feedback", eventId] });
   };
 
@@ -70,7 +88,9 @@ export function EventFeedback({ eventId, endAt }: Props) {
       </div>
 
       {!ended ? (
-        <p className="text-sm text-muted-foreground">Feedback will be available after the event ends.</p>
+        <p className="text-sm text-muted-foreground">
+          Feedback will be available after the event ends.
+        </p>
       ) : !user ? (
         <Link to="/auth" search={{ returnTo: `/events/${eventId}` }}>
           <Button variant="outline">Sign in to leave feedback</Button>
@@ -89,9 +109,16 @@ export function EventFeedback({ eventId, endAt }: Props) {
             <p className="mb-1 text-sm font-medium">Your rating</p>
             <StarRow value={rating} onChange={setRating} />
           </div>
-          <Textarea rows={3} maxLength={1000} placeholder="Optional comment…"
-            value={comment} onChange={(e) => setComment(e.target.value)} />
-          <Button onClick={submit} disabled={submitting}>Submit feedback</Button>
+          <Textarea
+            rows={3}
+            maxLength={1000}
+            placeholder="Optional comment…"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+          />
+          <Button onClick={submit} disabled={submitting}>
+            Submit feedback
+          </Button>
         </div>
       )}
 
@@ -105,7 +132,9 @@ export function EventFeedback({ eventId, endAt }: Props) {
           ))}
         </ul>
       )}
-      {ended && feedback.length === 0 && <p className="text-sm text-muted-foreground">No feedback yet.</p>}
+      {ended && feedback.length === 0 && (
+        <p className="text-sm text-muted-foreground">No feedback yet.</p>
+      )}
     </section>
   );
 }
@@ -114,9 +143,17 @@ function StarRow({ value, onChange }: { value: number; onChange?: (n: number) =>
   return (
     <div className="flex gap-1">
       {[1, 2, 3, 4, 5].map((n) => (
-        <button key={n} type="button" onClick={() => onChange?.(n)} disabled={!onChange}
-          className={onChange ? "cursor-pointer" : "cursor-default"} aria-label={`${n} stars`}>
-          <Star className={`h-5 w-5 ${n <= value ? "fill-primary text-primary" : "text-muted-foreground"}`} />
+        <button
+          key={n}
+          type="button"
+          onClick={() => onChange?.(n)}
+          disabled={!onChange}
+          className={onChange ? "cursor-pointer" : "cursor-default"}
+          aria-label={`${n} stars`}
+        >
+          <Star
+            className={`h-5 w-5 ${n <= value ? "fill-primary text-primary" : "text-muted-foreground"}`}
+          />
         </button>
       ))}
     </div>

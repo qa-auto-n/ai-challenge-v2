@@ -1,14 +1,18 @@
 // Generate and download an .ics calendar file for an event.
-function pad(n: number) { return String(n).padStart(2, "0"); }
+function pad(n: number) {
+  return String(n).padStart(2, "0");
+}
 function toICSDate(iso: string) {
   const d = new Date(iso);
   return (
     d.getUTCFullYear().toString() +
     pad(d.getUTCMonth() + 1) +
-    pad(d.getUTCDate()) + "T" +
+    pad(d.getUTCDate()) +
+    "T" +
     pad(d.getUTCHours()) +
     pad(d.getUTCMinutes()) +
-    pad(d.getUTCSeconds()) + "Z"
+    pad(d.getUTCSeconds()) +
+    "Z"
   );
 }
 function escape(s: string) {

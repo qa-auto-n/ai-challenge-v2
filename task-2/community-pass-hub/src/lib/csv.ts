@@ -5,7 +5,10 @@ export function escapeCsvValue(v: unknown): string {
   return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
 
-export function rowsToCsv(headers: string[], rows: (string | number | null | undefined)[][]): string {
+export function rowsToCsv(
+  headers: string[],
+  rows: (string | number | null | undefined)[][],
+): string {
   const lines = [headers.map(escapeCsvValue).join(",")];
   for (const row of rows) lines.push(row.map(escapeCsvValue).join(","));
   return lines.join("\r\n");
@@ -25,7 +28,14 @@ export function downloadCsv(filename: string, csv: string) {
 }
 
 export function slugify(s: string): string {
-  return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60) || "event";
+  return (
+    s
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 60) || "event"
+  );
 }
 
 export function formatLocalDateTime(iso: string | null | undefined): string {

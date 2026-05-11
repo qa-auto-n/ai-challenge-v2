@@ -15,8 +15,28 @@ function NewEvent() {
   const memberships = useMyMemberships();
   const isHost = (memberships.data ?? []).some((m) => m.role === "host");
 
-  if (!user) return <SiteLayout><div className="p-20 text-center">Please <Link to="/auth" search={{ returnTo: "/host/events/new" }} className="text-primary underline">sign in</Link>.</div></SiteLayout>;
-  if (memberships.isLoading) return <SiteLayout><div className="p-20 text-center">Loading…</div></SiteLayout>;
+  if (!user)
+    return (
+      <SiteLayout>
+        <div className="p-20 text-center">
+          Please{" "}
+          <Link
+            to="/auth"
+            search={{ returnTo: "/host/events/new" }}
+            className="text-primary underline"
+          >
+            sign in
+          </Link>
+          .
+        </div>
+      </SiteLayout>
+    );
+  if (memberships.isLoading)
+    return (
+      <SiteLayout>
+        <div className="p-20 text-center">Loading…</div>
+      </SiteLayout>
+    );
   if (!isHost) return <NoAccess message="You need a Host role to create events." />;
 
   return (
