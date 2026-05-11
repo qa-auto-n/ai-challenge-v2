@@ -12,6 +12,7 @@ export function SiteHeader() {
   const ms = memberships.data ?? [];
   const isHost = ms.some((m) => m.role === "host");
   const isChecker = !isHost && ms.some((m) => m.role === "checker");
+  const canBecomeHost = !!user && !isHost;
   const [open, setOpen] = useState(false);
 
   const links: { to: string; label: string }[] = [{ to: "/explore", label: "Explore" }];
@@ -53,6 +54,11 @@ export function SiteHeader() {
           {user ? (
             <>
               <span className="hidden text-sm text-muted-foreground sm:inline">{user.email}</span>
+              {canBecomeHost && (
+                <Link to="/host/register" className="hidden md:inline-flex">
+                  <Button size="sm">Become a host</Button>
+                </Link>
+              )}
               <Button
                 variant="ghost"
                 size="sm"
@@ -99,6 +105,13 @@ export function SiteHeader() {
                   {user ? (
                     <>
                       <p className="px-3 text-xs text-muted-foreground truncate">{user.email}</p>
+                      {canBecomeHost && (
+                        <Link to="/host/register" onClick={() => setOpen(false)}>
+                          <Button size="sm" className="w-full">
+                            Become a host
+                          </Button>
+                        </Link>
+                      )}
                       <Button
                         variant="ghost"
                         size="sm"

@@ -121,7 +121,11 @@ function HostDashboard() {
     );
   if (hostMemberships.length === 0) {
     return (
-      <NoAccess message="You need a Host role to access the dashboard. Become a host or use a host invite link." />
+      <NoAccess
+        message="You need a Host role to access the dashboard. Become a host or use a host invite link."
+        returnTo="/host/register"
+        primaryLabel="Become a host"
+      />
     );
   }
 

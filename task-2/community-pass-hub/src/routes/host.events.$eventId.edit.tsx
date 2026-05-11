@@ -47,7 +47,14 @@ function EditEvent() {
         <div className="p-20 text-center">Loading…</div>
       </SiteLayout>
     );
-  if (!isHost) return <NoAccess message="You need a Host role to edit events." />;
+  if (!isHost)
+    return (
+      <NoAccess
+        message="You need a Host role to edit events."
+        returnTo="/host/register"
+        primaryLabel="Become a host"
+      />
+    );
 
   return (
     <SiteLayout>

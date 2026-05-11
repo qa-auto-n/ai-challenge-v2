@@ -37,12 +37,22 @@ export const Route = createRootRoute({
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "CommunityPass — Free community event hosting" },
       { name: "description", content: "Host and attend free community events." },
-      { property: "og:title", content: "CommunityPass" },
-      {
-        property: "og:description",
-        content: "Free community event hosting and attendance platform.",
-      },
+      { property: "og:title", content: "CommunityPass — Free community event hosting" },
+      { property: "og:description", content: "Host and attend free community events." },
       { property: "og:type", content: "website" },
+      { name: "twitter:title", content: "CommunityPass — Free community event hosting" },
+      { name: "twitter:description", content: "Host and attend free community events." },
+      {
+        property: "og:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/80b3b8af-2c1f-4e3e-8e9f-4af571f49c5f/id-preview-98f9c66f--785cf13f-2caa-42e5-9b82-a02e27d3b810.lovable.app-1778318936274.png",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/80b3b8af-2c1f-4e3e-8e9f-4af571f49c5f/id-preview-98f9c66f--785cf13f-2caa-42e5-9b82-a02e27d3b810.lovable.app-1778318936274.png",
+      },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

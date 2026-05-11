@@ -3,7 +3,15 @@ import { SiteLayout } from "@/components/SiteLayout";
 import { Button } from "@/components/ui/button";
 import { ShieldAlert } from "lucide-react";
 
-export function NoAccess({ message, returnTo }: { message?: string; returnTo?: string }) {
+export function NoAccess({
+  message,
+  returnTo,
+  primaryLabel,
+}: {
+  message?: string;
+  returnTo?: string;
+  primaryLabel?: string;
+}) {
   return (
     <SiteLayout>
       <div className="container mx-auto max-w-md px-4 py-20 text-center">
@@ -14,7 +22,7 @@ export function NoAccess({ message, returnTo }: { message?: string; returnTo?: s
         </p>
         <div className="mt-6 flex justify-center gap-2">
           <Link to={(returnTo ?? "/explore") as "/explore"}>
-            <Button>Go back</Button>
+            <Button>{primaryLabel ?? "Go back"}</Button>
           </Link>
           <Link to="/">
             <Button variant="outline">Home</Button>
