@@ -11,7 +11,8 @@
 
 ### Platform
 
-- **Lovable** — AI-assisted full-stack web application builder. Used to scaffold the project, generate the initial database schema, produce React components, and deploy the application to Cloudflare Pages with a connected Supabase backend.
+- **Lovable** — AI-assisted full-stack web application builder. Used to scaffold the project, generate the initial database schema, produce React components, and deploy the application to Cloudflare Pages with a connected Supabase backend. The free plan has a limited token allowance, which was exhausted partway through development.
+- **Claude Code** (Anthropic) — used to continue development after Lovable tokens ran out. Bugs found during manual testing were diagnosed and fixed directly in the codebase via Claude Code: mobile navigation, RSVP count display on event cards, host-role auth guards on editor routes, feedback RLS policy, OG social preview metadata, and the sign-up confirmation toast. Additional migrations (demo seed data, feedback public-read policy) were also written with Claude Code.
 
 ### Frontend Stack
 
