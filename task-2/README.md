@@ -4,10 +4,10 @@ CommunityPass is a lightweight event hosting and attendance platform. This guide
 
 ## Submission Artifacts
 
-- Deployed application: [https://community-pass-hub.lovable.app](https://community-pass-hub.lovable.app)
+- Deployed application: [https://community-pass-hub.lovable.app](https://community-pass-hub.lovable.app/)
 - Public repository: [https://github.com/qa-auto-n/ai-challenge-v2](https://github.com/qa-auto-n/ai-challenge-v2)
 - Project folder: `task-2/`
-- Example CSV export: [task-2/community-pass-hub/examples/rsvps-export-example.csv](/Users/nastassia/HomeProjects/ai-challenge-v2/task-2/community-pass-hub/examples/rsvps-export-example.csv:1)
+- Example CSV export: [`community-pass-hub/examples/rsvps-export-example.csv`](community-pass-hub/examples/rsvps-export-example.csv)
 
 ## Seeded Demo Content
 

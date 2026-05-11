@@ -1,4 +1,7 @@
 name,email,RSVP status,check-in time
-Ada Lovelace,ada@example.com,Going,2026-05-09 18:42
-Grace Hopper,grace@example.com,Waitlist,
-"Doe, Jane",jane@example.com,Cancelled,
+Ada Lovelace,ada.lovelace@demo.test,Going,2025-11-04 19:00
+Linus Torvalds,linus.torvalds@demo.test,Going,2025-11-04 19:03
+Grace Hopper,grace.hopper@demo.test,Going,2025-11-04 19:07
+Alan Turing,alan.turing@demo.test,Going,2025-11-04 19:12
+Margaret Hamilton,margaret.hamilton@demo.test,Going,
+Dennis Ritchie,dennis.ritchie@demo.test,Waitlist,

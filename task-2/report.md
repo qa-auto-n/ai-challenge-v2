@@ -2,10 +2,10 @@
 
 ## Submission Summary
 
-- Deployed application: [https://community-pass-hub.lovable.app](https://community-pass-hub.lovable.app)
+- Deployed application: [https://community-pass-hub.lovable.app](https://community-pass-hub.lovable.app/)
 - Public repository: [https://github.com/qa-auto-n/ai-challenge-v2](https://github.com/qa-auto-n/ai-challenge-v2)
-- Task folder: `task-2/community-pass-hub`
-- Example CSV export: `task-2/community-pass-hub/examples/rsvps-export-example.csv`
+- Task folder: `task-2/`
+- Example CSV export: [`task-2/community-pass-hub/examples/rsvps-export-example.csv`](community-pass-hub/examples/rsvps-export-example.csv)
 
 ## Tools and Techniques Used
 
