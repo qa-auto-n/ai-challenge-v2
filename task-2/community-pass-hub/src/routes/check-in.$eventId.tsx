@@ -79,12 +79,38 @@ function CheckIn() {
       if (!user) throw new Error("Sign in required");
       const trimmed = code.trim();
       if (!trimmed) throw new Error("Enter a ticket code");
-      // Look up by ticket_code only, then validate event match for clearer messaging.
-      const { data: rsvp } = await supabase
-        .from("rsvps")
-        .select("*, profiles(name, email)")
-        .eq("ticket_code", trimmed)
-        .maybeSingle();
+
+      // Normalize common manual-entry variations:
+      // - lowercase vs uppercase
+      // - smart dashes / em dashes
+      // - stray spaces from copy/paste
+      // - optional CP prefix without the dash
+      const normalized = trimmed
+        .toUpperCase()
+        .replace(/[‐‑–—]/g, "-")
+        .replace(/\s+/g, "");
+      const compact = normalized.replace(/-/g, "");
+      const candidates = Array.from(
+        new Set([
+          normalized,
+          compact.startsWith("CP") && compact.length > 2 ? `CP-${compact.slice(2)}` : normalized,
+          compact.startsWith("CP") ? compact : `CP${compact}`,
+        ]),
+      );
+
+      // Look up by ticket_code first, then fall back to equivalent normalized forms.
+      let rsvp = null;
+      for (const candidate of candidates) {
+        const { data } = await supabase
+          .from("rsvps")
+          .select("*, profiles(name, email)")
+          .eq("ticket_code", candidate)
+          .maybeSingle();
+        if (data) {
+          rsvp = data;
+          break;
+        }
+      }
       if (!rsvp) throw new Error("Ticket not found");
       if (rsvp.event_id !== eventId) throw new Error("This ticket is for another event");
       if (rsvp.status === "cancelled") throw new Error("This RSVP was cancelled");
@@ -238,6 +264,9 @@ function CheckIn() {
                 placeholder="Enter ticket code (e.g. CP-XXXXXXXX)"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
+                autoCapitalize="characters"
+                autoCorrect="off"
+                spellCheck={false}
                 onKeyDown={(e) => e.key === "Enter" && checkIn.mutate()}
               />
               <Button onClick={() => checkIn.mutate()} disabled={!code.trim() || checkIn.isPending}>
