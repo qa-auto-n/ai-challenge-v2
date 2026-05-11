@@ -2,12 +2,25 @@
 
 CommunityPass is a lightweight event hosting and attendance platform. This guide walks through the four main flows: **Publish → RSVP → Ticket → Check-in**.
 
----
+## Submission Artifacts
+
+- Deployed application: [https://community-pass-hub.lovable.app](https://community-pass-hub.lovable.app)
+- Public repository: [https://github.com/qa-auto-n/ai-challenge-v2](https://github.com/qa-auto-n/ai-challenge-v2)
+- Project folder: `task-2/`
+- Example CSV export: [task-2/community-pass-hub/examples/rsvps-export-example.csv](/Users/nastassia/HomeProjects/ai-challenge-v2/task-2/community-pass-hub/examples/rsvps-export-example.csv:1)
+
+## Seeded Demo Content
+
+The deployed app includes the minimum seeded content required by the task:
+
+- Host: `Community Tech Hub`
+- Upcoming event: `Frontend Meetup 2026`
+- Past event: `QA Community Night`
 
 ## Prerequisites
 
 - A modern browser (Chrome, Firefox, Safari, Edge)
-- Access to the deployed app URL (provided separately)
+- Access to the deployed app URL above
 
 ---
 
@@ -43,7 +56,7 @@ From the dashboard event table you can:
 | Action | How |
 |--------|-----|
 | Edit | Click **Manage** |
-| Unpublish | Open the editor and click **Save draft** (reverts to draft) |
+| Unpublish | Open the editor and click **Unpublish** |
 | Duplicate | In the editor, click **Duplicate** — creates a draft copy shifted one week forward |
 | Export attendees | Click **RSVPs CSV** or **Attendance CSV** |
 
@@ -123,5 +136,5 @@ Exported files use the following columns and open correctly in Excel and Google 
 | `check-in time` | `YYYY-MM-DD HH:MM` (local) or blank if not checked in |
 
 Two variants are available:
-- **RSVPs CSV** — all non-cancelled RSVPs
-- **Attendance CSV** — Going and Waitlist rows, plus any Cancelled rows that were previously checked in
+- **RSVPs CSV** — all RSVP rows for the event
+- **Attendance CSV** — attendance-focused rows, including checked-in history

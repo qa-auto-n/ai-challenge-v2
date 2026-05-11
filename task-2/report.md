@@ -1,5 +1,12 @@
 # Task 2 — Development Report
 
+## Submission Summary
+
+- Deployed application: [https://community-pass-hub.lovable.app](https://community-pass-hub.lovable.app)
+- Public repository: [https://github.com/qa-auto-n/ai-challenge-v2](https://github.com/qa-auto-n/ai-challenge-v2)
+- Task folder: `task-2/community-pass-hub`
+- Example CSV export: `task-2/community-pass-hub/examples/rsvps-export-example.csv`
+
 ## Tools and Techniques Used
 
 ### Platform
@@ -18,6 +25,7 @@
 | `qrcode.react` | QR code generation for tickets |
 | `sonner` | Toast notifications |
 | `date-fns` | Date manipulation for CSV formatting |
+| `zod` v3 | Search-param validation compatible with TanStack's zod adapter |
 
 ### Backend / Infrastructure
 
@@ -63,7 +71,6 @@ Manual end-to-end testing across all flows:
 ## What Did Not Work / Limitations
 
 - **No real-time push** — waitlist promotion notifications rely on polling. A user whose tab is inactive won't receive the notification until they return to the page. A Supabase Realtime subscription would be the right long-term solution.
-- **Peer dependency conflict (zod v4 vs @tanstack/zod-adapter)** — `@tanstack/zod-adapter@1.166.9` declares a peer dependency on `zod ^3.x`, but the project uses `zod ^4.4.3`. This causes a warning with npm strict mode. In practice the runtime behaviour is compatible (zod v4 is largely backward-compatible for the basic schema types used here), and the project installs correctly under bun (the runtime used by Lovable). It is noted as a dependency hygiene issue to resolve when a compatible adapter release lands.
 - **No email notifications** — attendees are not emailed when they are promoted from waitlist to confirmed. In-app polling is the only promotion signal.
 - **Image upload path** — images are stored under `{userId}/{uuid}.{ext}` in Supabase Storage. There is no post-upload image optimisation (resizing, format conversion). Large uploads from attendees are accepted up to the bucket size limit.
 - **Timezone input is a free-text field** — no validation beyond requiring a non-empty string. An incorrect IANA timezone string would silently fall back to UTC in `Intl.DateTimeFormat`.
