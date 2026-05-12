@@ -20,6 +20,8 @@
 
 **Examiner Validate Answer Agent** — a third model instance used specifically for answer validation. Rather than comparing the user's selected letter against the stored correct answer with a string match, this agent receives the question, all options, the correct answer key, and the user's selection, and returns a semantic judgment. This allows it to confirm correctness even if there is minor phrasing variation, and to generate a short explanation when the user is wrong.
 
+**OpenAI API credits** — all three AI agents ran on n8n's built-in free OpenAI API credits (`gpt-5-mini`), which made it possible to iterate and test extensively without any API cost. The bot was tested across a wide range of article URLs, quiz flows, edge cases (empty responses, rapid taps, re-submitting the same URL), and answer validation scenarios throughout development.
+
 **quizSessionId** — each quiz session is assigned a unique ID (`quiz-<timestamp>`) at the moment the five questions are generated and stored. All five question rows share this session ID. When the user answers a question, the answer is written back to the matching row using the session ID + question ID as the lookup key. This design allows a user to retake a quiz on the same material multiple times without previous sessions' answers being overwritten, since each session produces its own set of rows.
 
 ---
@@ -39,6 +41,7 @@
 - **Long articles** — very long pages are passed in full to the AI agent prompt, which can exceed the model's effective context. Summaries for long articles sometimes only reflect the beginning of the content. Chunking or truncation to a character limit was not implemented.
 - **No URL deduplication** — if a user submits the same URL twice, two separate records are created in `learning_materials`. A check-before-insert step was considered but left out to keep the flow straightforward.
 - **DataTable filtering constraints** — the DataTable node's filter options are limited. Filtering by session ID AND a numeric "greater than" index for finding the next question required careful node ordering and occasional workarounds.
+- **Rapid answer taps** — tapping an answer button multiple times quickly before the next question loads is not deduplicated. The callback is processed more than once, which can corrupt the quiz session state. Users need to tap once and wait for the next question to appear.
 
 ---
 
