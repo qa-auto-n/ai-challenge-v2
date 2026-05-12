@@ -56,3 +56,4 @@ The quiz flow is identical: five questions, one at a time, with a score summary 
 - Your saved topics and quiz sessions persist between conversations — you can return any time and use `/quiz` to access previously learned material.
 - The bot does not require a restart between commands.
 - Pages built with heavy client-side JavaScript (React, Angular, etc.) may produce incomplete summaries, since the bot fetches raw HTML without a browser engine.
+- After tapping an answer button, wait for the next question to appear before tapping again. Rapid or duplicate taps are not deduplicated and may cause the same answer to be processed twice, leading to unexpected quiz state.
